@@ -1,0 +1,525 @@
+{% extends 'base.html' %} {% block title %} 智能云医学影像分析平台 {% endblock %} {% block
+head %}
+<!-- 定义主页背景色的CSS样式 -->
+<script src="../../static/js/waibu/scrollreveal.js"></script>
+<script src="../../static/js/waibu/jquery.min.js"></script>
+<script src="../../static/js/bootsrap/bootstrap.bundle.min.js"></script>
+<script src="../../static/js/waibu/bootstrap-slider.js"></script>
+<script src="../../static/js/waibu/jquery-ui.min.js"></script>
+<script src="../../static/js/waibu/aos.js"></script>
+<script src="../../static/js/other.js"></script>
+
+<link rel="stylesheet" href="../../static/css/waibu/jquery-ui.min.css" />
+<link href="../../static/css/waibu/bootstrap-slider.css" rel="stylesheet" />
+<link href="../../static/css/waibu/layui.css" rel="stylesheet" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.css" />
+<link rel="stylesheet" href="../../static/css/waibu/jquery-scrollbar.css" />
+<link rel="stylesheet" href="../../static/css/wangzhan.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.rtl.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-reboot.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-utilities.css" />
+<link rel="stylesheet" href="../../static/css/waibu/aos.css" />
+<style>
+    * {
+        vertical-align: middle;
+    }
+
+    .content {
+        margin: 20px;
+        float: left;
+    }
+
+    .content div {
+        margin-bottom: 15px;
+        width: 80px;
+        text-align: center;
+    }
+
+    #canvas {
+        background-color: transparent;
+        -webkit-box-shadow: 0px 0px 10px 5px #3b8cf8, 0 0 1px #3b8cf8, 0 0 1px #3b8cf8, 0 0 1px #3b8cf8, 0 0 1px #3b8cf8, 0 0 1px #3b8cf8, 0 0 1px #3b8cf8;
+    }
+
+    .button1 {
+        height: 40px;
+        line-height: 40px;
+        font-size: 15px;
+        color: gold;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        border: none;
+        margin-right: 10px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .button1:hover {
+        color: darkorange;
+    }
+
+    .button1:active {
+        border: none;
+        color: white;
+        outline: none;
+        background: LightSkyBlue;
+    }
+
+    .range1 {
+        width: 80px;
+        height: 5px;
+    }
+
+    label {
+        color: gold;
+    }
+
+    label span {
+        color: #48c0a4;
+    }
+
+    .画笔选择 {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin: 0 3px;
+        cursor: pointer;
+    }
+
+    #画笔 {
+        background: url("../img/画笔工具.png");
+        background-repeat: no-repeat;
+        background-position: 0px 0px;
+    }
+
+    #画笔:hover {
+        background: url("../img/画笔工具.png");
+        background-repeat: no-repeat;
+        background-position: 0px -23px;
+    }
+
+    #空心矩形 {
+        background: url("../img/画笔工具.png");
+        background-repeat: no-repeat;
+        background-position: 0px -45px;
+    }
+
+    #实心矩形 {
+        width: 18px;
+        height: 18px;
+        background: #E89184;
+        border-radius: 5px;
+    }
+
+    #空心矩形:hover {
+        background: url("../img/画笔工具.png");
+        background-repeat: no-repeat;
+        background-position: 0px -67px;
+    }
+
+    #实心矩形:hover {
+        background: #F64524;
+    }
+
+    #空心圆形 {
+        background: url("../img/画笔工具.png");
+        background-repeat: no-repeat;
+        background-position: 0px -90px;
+    }
+
+    #实心圆形 {
+        width: 18px;
+        height: 18px;
+        background: #E89184;
+        border-radius: 50%;
+    }
+
+    #空心圆形:hover {
+        background: url("../img/画笔工具.png");
+        background-repeat: no-repeat;
+        background-position: 0px -113px;
+    }
+
+    #实心圆形:hover {
+        background: #F64524;
+    }
+
+    #直线 {
+        background: url("../img/画笔工具.png");
+        background-repeat: no-repeat;
+        background-position: 0px -133px;
+    }
+
+    #直线:hover {
+        background: url("../img/画笔工具.png");
+        background-repeat: no-repeat;
+        background-position: 0px -150px;
+    }
+
+    #箭头 {
+        background: url("../img/画笔工具.png");
+        background-repeat: no-repeat;
+        background-position: 0px -266px;
+    }
+
+    #箭头:hover {
+        background: url("../img/画笔工具.png");
+        background-repeat: no-repeat;
+        background-position: 0px -290px;
+    }
+
+    #文字 {
+        background: url("../img/画笔工具.png");
+        background-repeat: no-repeat;
+        background-position: 0px -169px;
+    }
+
+    #文字:hover {
+        background: url("../img/画笔工具.png");
+        background-repeat: no-repeat;
+        background-position: 0px -192px;
+    }
+
+    #brushSizeLine {
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: gold;
+    }
+
+    #eraserSizeLine {
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: gold;
+    }
+</style>
+{% endblock %} {% block body%}
+<div>
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
+        <div class="container">
+            <a class="h1 navbar-brand" href="{{url_for('root')}}" id="navname">智能云医学影像分析平台</a>
+            <button class="navbar-light navbar-toggler collapsed btn btn-primary" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarsDefault" aria-expanded="false"
+                aria-controls="navbarsDefault">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse offcanvas-collapse" id="navbarsDefault">
+                <ul class="navbar-nav ml-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a href="{{url_for('datauploads.datauploads')}}" class="nav-link"
+                            style="color: aquamarine;">上传数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="#" onclick="showPopup()" class="nav-link">客观评价</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('subjectivealls.subjectivealls')}}" class="nav-link">分享数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupa()" class="nav-link">评估</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('statistics.statistics')}}" class="nav-link">统计</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupb()" class="nav-link">主观评价</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{url_for('teammates.teammates')}}" class="nav-link">团队</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="false"
+                            aria-expanded="false">用户</a>
+                        <ul class="dropdown-menu" style="min-width: 22px">
+                            <li>
+                                <a href="{{url_for('login.login')}}" class="dropdown-item">登录</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.register')}}" class="dropdown-item">注册</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.retrieve')}}" class="dropdown-item">找回</a>
+                            </li>
+                            <li>
+                                <a href="/admin" class="dropdown-item">后台</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <input name="e1" id="e1" value="{{gif}}" hidden>
+    <input name="e2" id="e2" value="{{teamcode}}" hidden>
+    <input name="e3" id="e3" value="{{filename}}" hidden>
+    <input name="e4" id="e4" value="{{T}}" hidden>
+    <div class="container pt-7 pb-5" style="width: 90%">
+        <div style="height: 20px"></div>
+        <div class="justify-content-center">
+            <div class="content">
+                <div class="button1" onclick="clearCanvas()">清空</div>
+                <div>
+                    <div>
+                        <label for="brushSize">画笔 <span id="brushSizeValue">10</span></label>
+                    </div>
+                    <div>
+                        <input class="range1" type="range" id="brushSize" min="1" max="50" value="10"
+                            onchange="updateValue('brushSize')" oninput="updateLine('brushSize', 'brushSizeLine')">
+                        <div style="width: 80px;height: 50px">
+                            <div id="brushSizeLine"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="eraserSize">橡皮 <span id="eraserSizeValue">20</span></label>
+                    </div>
+                    <div>
+                        <input class="range1" type="range" id="eraserSize" min="1" max="80" value="20"
+                            onchange="updateValue('eraserSize')" oninput="updateLine('eraserSize', 'eraserSizeLine')">
+                        <div style="width: 80px;height: 80px">
+                            <div id="eraserSizeLine"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div style="color: #48c0a4;">
+                <span>橡皮：ctrl+左键</span>&nbsp;&nbsp;
+                <button onclick="save13()">开始</button>
+            </div>
+            <div style="margin: 20px auto;width: 1850px;">
+                <canvas id="canvas" width="{{width}}" height="{{height}}"
+                    style="position: absolute;z-index: 2;"></canvas>
+                <img src="{{gif}}" style="position: absolute;z-index: 1;">
+                <img src="{{ans}}" style="position: absolute;margin-left: 30%">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 引入动态创建消息弹框的js -->
+<script type="text/javascript" src="../js/msgBox.js"></script>
+
+<script>
+    // 当前画笔模式：1 空心矩形 2 实心矩形 3 空心圆形 4 实心圆形 5 直线 6 箭头 7 自由画笔 8 文字
+    let brush = 7;
+
+    // 获取画布和绘画工具
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // 跟踪绘画状态
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    let isDrawing = false; //标记是否要绘制
+    let isMouseDown = false; //标记鼠标是否按下
+    let lineColor; // 线条颜色
+    let lineWidth; // 线条粗细
+    let points = []; //存储坐标点
+    let undoStack = []; // 存储画布状态，用于撤销上一步操作
+    let step = 0; // 记录当前步数
+
+    // 鼠标按下
+    canvas.onpointerdown = function (e) {
+        if (brush != 8) { // 排除文本模式
+            points = [];
+            isDrawing = true;
+            isMouseDown = true;
+            points.push({ x: e.offsetX, y: e.offsetY });
+            if (e.ctrlKey) { // 如果是橡皮擦，则设置为destination-out
+                ctx.globalCompositeOperation = 'destination-out';
+            } else { // 否则设置为默认值source-over
+                ctx.globalCompositeOperation = 'source-over';
+            }
+            ctx.beginPath(); // 新增：开始一个绘画路径
+        }
+    };
+
+    // 鼠标单击
+    canvas.onclick = function (e) {
+        if (brush === 8) { // 只有当画笔模式为文本模式时
+            points = [];
+            draw(e.offsetX, e.offsetY, e.ctrlKey);
+        }
+    };
+
+    // 鼠标抬起
+    canvas.onpointerup = function (e) {
+        isMouseDown = false;
+        if (brush != 8) { // 排除文本模式
+            points = [];
+            isDrawing = false;
+            ctx.closePath(); // 新增：结束绘画路径
+            // 绘画结束后，将值重新设置为默认值，否则当前值为destination-out时，使用撤销功能后会把整个画布的内容都给擦掉
+            ctx.globalCompositeOperation = 'source-over';
+            addUndoStack(canvas.toDataURL()); // 将当前画布状态保存起来
+        }
+    };
+    // 鼠标离开画布
+    canvas.onpointerout = function (e) {
+        if (brush != 8 && isMouseDown) { // 排除文本模式
+            points = [];
+            isDrawing = false;
+            isMouseDown = false;
+            ctx.closePath(); // 新增：结束绘画路径
+            ctx.globalCompositeOperation = 'source-over';
+            // 绘画结束后，将值重新设置为默认值，否则当前值为destination-out时，使用撤销功能后会把整个画布的内容都给擦掉
+            addUndoStack(canvas.toDataURL()); // 将当前画布状态保存起来
+        }
+    };
+
+    // 鼠标移动
+    canvas.onpointermove = function (e) {
+        if (brush != 8) { // 排除文本模式
+            if (!isDrawing) return;
+            const brushSize = document.getElementById('brushSize').value;
+            const eraserSize = document.getElementById('eraserSize').value;
+            lineWidth = e.ctrlKey ? eraserSize : brushSize;
+            lineColor = '#ff0000';
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = lineColor;
+            draw(e.offsetX, e.offsetY, e.ctrlKey);
+        }
+    };
+
+    // 绘制
+    function draw(mousex, mousey, ctrlKey) {
+        points.push({ x: mousex, y: mousey });
+        if ((ctrlKey && brush != 8) || brush === 7) { // 如果是橡皮擦模式，则和画笔模式一样，用draw画笔方法。
+            draw画笔();
+        }
+        ctx.stroke();
+        points.slice(0, 1);
+    }
+
+    // 绘制自由线条
+    function draw画笔() {
+        ctx.beginPath();
+        let x = (points[points.length - 2].x + points[points.length - 1].x) / 2,
+            y = (points[points.length - 2].y + points[points.length - 1].y) / 2;
+        if (points.length == 2) {
+            ctx.moveTo(points[points.length - 2].x, points[points.length - 2].y);
+            ctx.lineTo(x, y);
+        } else {
+            let lastX = (points[points.length - 3].x + points[points.length - 2].x) / 2,
+                lastY = (points[points.length - 3].y + points[points.length - 2].y) / 2;
+            ctx.moveTo(lastX, lastY);
+            ctx.quadraticCurveTo(points[points.length - 2].x, points[points.length - 2].y, x, y);
+        }
+    }
+    // 加载图片
+    function loadImage() {
+        if (step > 0) {
+            var img = new Image();
+            img.src = undoStack[step - 1];
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    // 清空画布
+    function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        step = 0;
+        points = [];
+        undoStack = []; // 清空撤销栈
+    }
+
+    // 添加操作
+    function addUndoStack(url) {
+        if (step < undoStack.length) {
+            undoStack.length = step; // 清除撤销后的操作
+        }
+        undoStack.push(url);
+        step++;
+    }
+
+    // 撤销操作
+    function undo() {
+        if (step > 1) {
+            step--;
+            const image = new Image();
+            image.src = undoStack[step - 1]; // 获取上一个画布状态
+            image.onload = function () {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(image, 0, 0); // 绘制上一个画布状态
+            }
+        } else {
+            step = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    // 恢复操作
+    function restore() {
+        if (step < undoStack.length) {
+            step++;
+            const image = new Image();
+            image.src = undoStack[step - 1]; // 获取下一个画布状态
+            image.onload = function () {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(image, 0, 0); // 绘制下一个画布状态
+            }
+        }
+    }
+
+    // 更新滑块值
+    function updateValue(inputId) {
+        var value = document.getElementById(inputId).value;
+        if (value < 10) { value = '0' + value; }
+        document.getElementById(inputId + "Value").textContent = value;
+    }
+
+    // 更新画笔线条宽度
+    function updateLine(inputId, lineId) {
+        var value = document.getElementById(inputId).value;
+        var line = document.getElementById(lineId);
+        line.style.height = value + 'px';
+        line.style.width = value + 'px';
+    }
+
+    function 切换画笔(id, val) {
+        brush = val;
+        messageplugin({ message: "切换为" + id, type: "success" });
+    }
+
+    // 监听键盘事件，实现撤销操作和保存绘画内容、切换画笔工具
+    function save13() {
+        if (!canvas) {
+            console.error('Canvas element not found!');
+            return;
+        }
+        const image = canvas.toDataURL('image/png');
+        var gif = document.getElementById("e1").value;
+        var teamcode = document.getElementById("e2").value;
+        var filename = document.getElementById("e3").value;
+        var T = document.getElementById("e4").value;
+        $.post(
+            "/subjectivealls/quxian",
+            { img: image, gif: gif, teamcode: teamcode, filename: filename, T: T },
+            function (result) {
+                if (result.success) {
+                    window.location.href = "/subjectivealls/canvas?gif=" + gif + "&teamcode=" + teamcode + "&filename=" + filename + "&T=" + T;
+                }
+                else {
+                    alert("错误!");
+                    window.location.href = "/subjective";
+                }
+            }
+        );
+    };
+</script>
+{% endblock %}

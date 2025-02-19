@@ -1,0 +1,886 @@
+{% extends 'base.html' %} {% block title %} 智能云医学影像分析平台 {% endblock %} {% block
+head %}
+<!-- 定义主页背景色的CSS样式 -->
+<script src="../../static/js/waibu/translate.js"></script>
+<script src="../../static/js/waibu/echarts.min.js"></script>
+<script src="../../static/js/waibu/jquery.min.js"></script>
+<script src="../../static/js/bootsrap/bootstrap.bundle.min.js"></script>
+<script src="../../static/js/waibu/jquery-ui.min.js"></script>
+<script src="../../static/js/waibu/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+<script src="../../static/js/other.js"></script>
+
+<link rel="stylesheet" href="../../static/css/waibu/jquery-ui.min.css">
+<link href="../../static/css/waibu/bootstrap-slider.css" rel="stylesheet">
+<link href="../../static/css/waibu/layui.css" rel="stylesheet" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.css" />
+<link rel="stylesheet" href="../../static/css/waibu/jquery-scrollbar.css" />
+<link rel="stylesheet" href="../../static/css/wangzhan.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.rtl.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-reboot.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-utilities.css" />
+<link rel="stylesheet" href="../../static/css/waibu/aos.css" />
+{% endblock %} {% block body%}
+<div>
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
+        <div class="container">
+            <a class="h1 navbar-brand" href="{{url_for('root')}}" id="navname">智能云医学影像分析平台</a>
+            <button class="navbar-light navbar-toggler collapsed btn btn-primary" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarsDefault" aria-expanded="false"
+                aria-controls="navbarsDefault">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse offcanvas-collapse" id="navbarsDefault">
+                <ul class="navbar-nav ml-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a href="{{url_for('datauploads.datauploads')}}" class="nav-link">上传数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="#" onclick="showPopup()" class="nav-link">客观评价</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('subjectivealls.subjectivealls')}}" class="nav-link">分享数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupa()" class="nav-link">评估</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('statistics.statistics')}}" class="nav-link">统计</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupb()" style="color: aquamarine;" class="nav-link">主观评价</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{url_for('teammates.teammates')}}" class="nav-link">团队</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="false"
+                            aria-expanded="false">用户</a>
+                        <ul class="dropdown-menu" style="min-width: 22px">
+                            <li>
+                                <a href="{{url_for('login.login')}}" class="dropdown-item">登录</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.register')}}" class="dropdown-item">注册</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.retrieve')}}" class="dropdown-item">找回</a>
+                            </li>
+                            <li>
+                                <a href="/admin" class="dropdown-item">后台</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="translate" style="text-align: right;margin-right: 50px;margin-top: 30px;"></div>
+    <div style="height: 10px;"></div>
+    <div class="container">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="myTab" role="tablist">
+                <li class="page-item" style="background-color:azure">
+                    <a class="page-link active comSub" id="contact-tab" data-bs-toggle="tab" onclick=""
+                        data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="true">
+                        1</a>
+                </li>
+                <li class="page-item" style="background-color:azure">
+                    <a class="page-link comSuba" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact1"
+                        type="button" role="tab" aria-controls="contact" aria-selected="false"> 2</a>
+                </li>
+                <li class="page-item" style="background-color:azure">
+                    <a class="page-link comSubb" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact2"
+                        type="button" role="tab" aria-controls="contact" aria-selected="false">
+                        3</a>
+                </li>
+                <li class="page-item" style="background-color:azure">
+                    <a class="page-link comSubc" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact3"
+                        type="button" role="tab" aria-controls="contact" aria-selected="false"> 4</a>
+                </li>
+                <!-- <li class="page-item" style="background-color:azure">
+                    <a class="page-link comSubd" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact4"
+                        type="button" role="tab" aria-controls="contact" aria-selected="false"> 5</a>
+                </li> -->
+            </ul>
+        </nav>
+    </div>
+    <input id="tt" value="{{tt}}" hidden>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <div style="height: 800px; margin: 0">
+                <div style="text-align: right;margin-right: 100px;">
+                    <button type="button" class="btn btn-light">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-download Suba" viewBox="0 0 16 16">
+                            <path
+                                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                            <path
+                                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="container1" style="height: 100%"></div>
+                <script type="text/javascript">
+                    let dataa = [];
+                    let datab = [];
+                    let datac = [];
+                    let dataaa = [];
+                    let databb = [];
+                    let datacc = [];
+                    $(".comSub").click(function () {
+                        var tt = document.getElementById("tt");
+                        $.ajax({
+                            url: "/statistics/statisticsajax",
+                            method: "post",
+                            data: { 'data': tt.value },
+                            dataType: "json",
+                            async: false,
+                            success: function (result) {
+                                dataa = [];
+                                datab = [];
+                                datac = [];
+                                dataaa = [];
+                                databb = [];
+                                datacc = [];
+                                dataa.push(Object.keys(result["data0"][0]).map(key => result["data0"][0][key]));
+                                dataa.push(Object.keys(result["data0"][1]).map(key => result["data0"][1][key]));
+                                dataa.push(Object.keys(result["data0"][2]).map(key => result["data0"][2][key]));
+                                datab.push(Object.keys(result["data1"][0]).map(key => result["data1"][0][key]));
+                                datab.push(Object.keys(result["data1"][1]).map(key => result["data1"][1][key]));
+                                datab.push(Object.keys(result["data1"][2]).map(key => result["data1"][2][key]));
+                                datac.push(Object.keys(result["data2"][0]).map(key => result["data2"][0][key]));
+                                datac.push(Object.keys(result["data2"][1]).map(key => result["data2"][1][key]));
+                                datac.push(Object.keys(result["data2"][2]).map(key => result["data2"][2][key]));
+
+                                dataaa.push(Object.keys(result["data0"][0]).map(key => result["data0"][0][key]));
+                                databb.push(Object.keys(result["data0"][1]).map(key => result["data0"][1][key]));
+                                datacc.push(Object.keys(result["data0"][2]).map(key => result["data0"][2][key]));
+                                dataaa.push(Object.keys(result["data1"][0]).map(key => result["data1"][0][key]));
+                                databb.push(Object.keys(result["data1"][1]).map(key => result["data1"][1][key]));
+                                datacc.push(Object.keys(result["data1"][2]).map(key => result["data1"][2][key]));
+                                dataaa.push(Object.keys(result["data2"][0]).map(key => result["data2"][0][key]));
+                                databb.push(Object.keys(result["data2"][1]).map(key => result["data2"][1][key]));
+                                datacc.push(Object.keys(result["data2"][2]).map(key => result["data2"][2][key]));
+                            },
+                            error: function (error) {
+                                alert("发送请求失败!");
+                            },
+                        });
+                        const data0 = dataaa;
+                        const data1 = databb;
+                        const data2 = datacc;
+                        var dom = document.getElementById('container1');
+                        var myChart = echarts.init(dom, null, {
+                            renderer: 'canvas',
+                            useDirtyRect: false
+                        });
+                        var app = {};
+
+                        var option;
+
+                        // Generate data.
+
+                        option = {
+                            title: {
+                                text: 'Score boxplot',
+                                left: 'center',
+                                textStyle: {
+                                    fontSize: 40,//该部分文字大小
+                                    fontWeight: 'bold',
+                                    fontStyle: 'italic',
+                                    color: '#ffffff'
+                                },
+                            },
+                            dataset: [
+                                {
+                                    source: data0
+                                },
+                                {
+                                    source: data1
+                                },
+                                {
+                                    source: data2
+                                },
+                                {
+                                    fromDatasetIndex: 0,
+                                    transform: {
+                                        type: 'boxplot', config: {
+                                            itemNameFormatter: function (params) {
+                                                if (params.value == 0)
+                                                    return "Overall quality";
+                                                else if (params.value == 1)
+                                                    return "SNR";
+                                                else
+                                                    return "Artifact suppression";
+                                            }
+                                        }
+                                    },
+                                },
+                                {
+                                    fromDatasetIndex: 1,
+                                    transform: {
+                                        type: 'boxplot', config: {
+                                            itemNameFormatter: function (params) {
+                                                if (params.value == 0)
+                                                    return "Overall quality";
+                                                else if (params.value == 1)
+                                                    return "SNR";
+                                                else
+                                                    return "Artifact suppression";
+                                            }
+                                        }
+                                    },
+                                },
+                                {
+                                    fromDatasetIndex: 2,
+                                    transform: {
+                                        type: 'boxplot', config: {
+                                            itemNameFormatter: function (params) {
+                                                if (params.value == 0)
+                                                    return "Overall quality";
+                                                else if (params.value == 1)
+                                                    return "SNR";
+                                                else
+                                                    return "Artifact suppression";
+                                            }
+                                        }
+                                    },
+                                }
+                            ],
+                            legend: {
+                                top: '10%',
+                                orient: 'horizontal',
+                                textStyle: {
+                                    color: 'write',
+                                    fontSize: '20px',
+                                    fontWeight: 700
+                                }
+                            },
+                            tooltip: {
+                                trigger: 'item',
+                                axisPointer: {
+                                    type: 'shadow'
+                                }
+                            },
+                            grid: {
+                                left: '10%',
+                                top: '20%',
+                                right: '10%',
+                                bottom: '15%'
+                            },
+                            xAxis: {
+                                type: 'category',
+                                boundaryGap: true,
+                                nameGap: 30,
+                                splitArea: {
+                                    show: true
+                                },
+                                splitLine: {
+                                    show: false
+                                }, axisLabel: {//y轴文字的配置
+                                    textStyle: {
+                                        fontSize: 20,//该部分文字大小
+                                        color: '#ffffff'
+                                    },
+                                },
+                            },
+                            yAxis: {
+                                type: 'value',
+                                name: '',
+                                min: 0,
+                                max: 5,
+                                splitArea: {
+                                    show: false
+                                }, axisLabel: {//y轴文字的配置
+                                    textStyle: {
+                                        fontSize: 20,//该部分文字大小
+                                        color: '#ffffff'
+                                    },
+                                },
+                            },
+                            dataZoom: [
+                                {
+                                    type: 'inside',
+                                    start: 0,
+                                    end: 20
+                                },
+                                {
+                                    show: true,
+                                    type: 'slider',
+                                    top: '90%',
+                                    xAxisIndex: [0],
+                                    start: 0,
+                                    end: 20
+                                }
+                            ],
+                            series: [
+                                {
+                                    name: 'Method A',
+                                    type: 'boxplot',
+                                    datasetIndex: 3,
+                                    data: data0.boxData,
+                                    tooltip: {//以下是设置tooltip的显示数据和显示格式
+                                        formatter: function (param) {
+                                            return [
+                                                'Name :' + 'Method A',
+                                                'Upper boundary :' + Math.floor(param.data[5] * 100) / 100,
+                                                'Upper quartile :' + Math.floor(param.data[4] * 100) / 100,
+                                                'Median :' + Math.floor(param.data[3] * 100) / 100,
+                                                'Lower quartile :' + Math.floor(param.data[2] * 100) / 100,
+                                                'Lower boundary :' + Math.floor(param.data[1] * 100) / 100,
+                                            ].join('<br/>');
+                                        }
+                                    },
+                                },
+                                {
+                                    name: 'Method B',
+                                    type: 'boxplot',
+                                    datasetIndex: 4,
+                                    data: data1.boxData,
+                                    tooltip: {//以下是设置tooltip的显示数据和显示格式
+                                        formatter: function (param) {
+                                            return [
+                                                'Name :' + 'Method B',
+                                                'Upper boundary :' + Math.floor(param.data[5] * 100) / 100,
+                                                'Upper quartile :' + Math.floor(param.data[4] * 100) / 100,
+                                                'Median :' + Math.floor(param.data[3] * 100) / 100,
+                                                'Lower quartile :' + Math.floor(param.data[2] * 100) / 100,
+                                                'Lower boundary :' + Math.floor(param.data[1] * 100) / 100,
+                                            ].join('<br/>');
+                                        }
+                                    }
+                                },
+                                {
+                                    name: 'Method C',
+                                    type: 'boxplot',
+                                    datasetIndex: 5,
+                                    data: data2.boxData,
+                                    tooltip: {//以下是设置tooltip的显示数据和显示格式
+                                        formatter: function (param) {
+                                            return [
+                                                'Name :' + 'Method C',
+                                                'Upper boundary :' + Math.floor(param.data[5] * 100) / 100,
+                                                'Upper quartile :' + Math.floor(param.data[4] * 100) / 100,
+                                                'Median :' + Math.floor(param.data[3] * 100) / 100,
+                                                'Lower quartile :' + Math.floor(param.data[2] * 100) / 100,
+                                                'Lower boundary :' + Math.floor(param.data[1] * 100) / 100,
+                                            ].join('<br/>');
+                                        }
+                                    }
+                                }
+                            ]
+                        };
+
+                        if (option && typeof option === 'object') {
+                            myChart.setOption(option);
+                        }
+                        window.addEventListener('resize', myChart.resize);
+                    });
+                    $(".Suba").click(function () {
+                        html2canvas(document.body).then(function (canvas) {
+                            // 将canvas转换为图片URL
+                            var imageURL = canvas.toDataURL("image/png");
+
+                            // 创建一个用于下载的a元素
+                            var downloadLink = document.createElement("a");
+                            downloadLink.href = imageURL;
+                            downloadLink.download = "ScoreBoxplot.png";
+                            // 模拟点击下载链接
+                            downloadLink.click();
+                        });
+                    })
+                </script>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="contact1" role="tabpanel" aria-labelledby="contact-tab">
+            <div style="height: 800px; margin: 0">
+                <div style="text-align: right;margin-right: 100px;">
+                    <button type="button" class="btn btn-light">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-download Subb" viewBox="0 0 16 16">
+                            <path
+                                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                            <path
+                                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="container0" style="height: 100%"></div>
+                <script type="text/javascript">
+                    $(".comSuba").click(function () {
+                        var dom = document.getElementById('container0');
+                        var myChart = echarts.init(dom, null, {
+                            renderer: 'canvas',
+                            useDirtyRect: false
+                        });
+                        let datas0 = []
+                        for (var i = 0; i < 3; i++) {//评估
+                            let datas = []
+                            datas.push(0)
+                            datas.push(0)
+                            datas.push(0)
+                            datas.push(0)
+                            datas.push(0)
+                            datas.push(0)
+                            for (var j = 0; j < dataa[i].length; j++) {//人数
+                                if (dataa[i][j] == 0)
+                                    datas[0]++;
+                                else if (dataa[i][j] > 0 && dataa[i][j] <= 1.0)
+                                    datas[1]++;
+                                else if (dataa[i][j] > 1.0 && dataa[i][j] <= 2.0)
+                                    datas[2]++;
+                                else if (dataa[i][j] > 2.0 && dataa[i][j] <= 3.0)
+                                    datas[3]++;
+                                else if (dataa[i][j] > 3.0 && dataa[i][j] <= 4.0)
+                                    datas[4]++;
+                                else
+                                    datas[5]++;
+                            }
+                            for (var j = 0; j <= 5; j++) {
+                                datas[j] = (datas[j] * 100 / dataa[i].length).toFixed(2);
+                            }
+                            datas0.push(datas);
+                        }
+                        let datas1 = []
+                        for (var i = 0; i < 3; i++) {//评估
+                            let datas = []
+                            datas.push(0)
+                            datas.push(0)
+                            datas.push(0)
+                            datas.push(0)
+                            datas.push(0)
+                            datas.push(0)
+                            for (var j = 0; j < datab[i].length; j++) {//人数
+                                if (datab[i][j] == 0)
+                                    datas[0]++;
+                                else if (datab[i][j] > 0 && datab[i][j] <= 1)
+                                    datas[1]++;
+                                else if (datab[i][j] > 1 && datab[i][j] <= 2)
+                                    datas[2]++;
+                                else if (datab[i][j] > 2 && datab[i][j] <= 3)
+                                    datas[3]++;
+                                else if (datab[i][j] > 3 && datab[i][j] <= 4)
+                                    datas[4]++;
+                                else if (datab[i][j] > 4 && datab[i][j] <= 5)
+                                    datas[5]++;
+                            }
+                            for (var j = 0; j <= 5; j++) {
+                                datas[j] = (datas[j] * 100 / dataa[i].length).toFixed(2);
+                            }
+                            datas1.push(datas);
+                        }
+                        let datas2 = []
+                        for (var i = 0; i < 3; i++) {//评估
+                            let datas = []
+                            datas.push(0)
+                            datas.push(0)
+                            datas.push(0)
+                            datas.push(0)
+                            datas.push(0)
+                            datas.push(0)
+                            for (var j = 0; j < datac[i].length; j++) {//人数
+                                if (datac[i][j] == 0)
+                                    datas[0]++;
+                                else if (datac[i][j] > 0 && datac[i][j] <= 1)
+                                    datas[1]++;
+                                else if (datac[i][j] > 1 && datac[i][j] <= 2)
+                                    datas[2]++;
+                                else if (datac[i][j] > 2 && datac[i][j] <= 3)
+                                    datas[3]++;
+                                else if (datac[i][j] > 3 && datac[i][j] <= 4)
+                                    datas[4]++;
+                                else if (datac[i][j] > 4 && datac[i][j] <= 5)
+                                    datas[5]++;
+                            }
+                            for (var j = 0; j <= 5; j++) {
+                                datas[j] = (datas[j] * 100 / dataa[i].length).toFixed(2);
+                            }
+                            datas2.push(datas);
+                        }
+                        var app = {};
+
+                        var option;
+
+                        option = {
+                            title: {
+                                text: 'Percentile bargraph',
+                                left: 'center',
+                                textStyle: {
+                                    fontSize: 40,//该部分文字大小
+                                    fontWeight: 'bold',
+                                    fontStyle: 'italic',
+                                    color: '#ffffff'
+                                },
+                            }, tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                    // Use axis to trigger tooltip
+                                    type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
+                                }
+                            },
+                            legend: {
+                                top: '10%',
+                                orient: 'horizontal',
+                                textStyle: {
+                                    color: 'write',
+                                    fontSize: '20px',
+                                    fontWeight: 700
+                                }
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                top: '20%',
+                                containLabel: true
+                            },
+                            xAxis: {
+                                type: 'value',
+                                axisLabel: {//y轴文字的配置
+                                    textStyle: {
+                                        fontSize: 20,//该部分文字大小
+                                        color: '#ffffff'
+                                    },
+                                }
+                            },
+                            yAxis: {
+                                type: 'category',
+                                axisLabel: {//y轴文字的配置
+                                    textStyle: {
+                                        fontSize: 20,//该部分文字大小
+                                        color: '#ffffff'
+                                    },
+                                },
+                                data: ['Overall quality-Method A', 'Overall quality-Method B', 'Overall quality-Method C', 'SNR-Method A', 'SNR-Method B', 'SNR-Method C', 'Artifact suppression-Method A', 'Artifact suppression-Method B', 'Artifact suppression-Method C']
+                            },
+                            series: [
+                                {
+                                    name: '0',
+                                    type: 'bar',
+                                    stack: 'total',
+                                    label: {
+                                        show: true
+                                    },
+                                    emphasis: {
+                                        focus: 'series'
+                                    },
+                                    data: [datas0[0][0], datas0[1][0], datas0[2][0], datas1[0][0], datas1[1][0], datas1[2][0], datas2[0][0], datas2[1][0], datas2[2][0]]
+                                },
+                                {
+                                    name: '0-1',
+                                    type: 'bar',
+                                    stack: 'total',
+                                    label: {
+                                        show: true
+                                    },
+                                    emphasis: {
+                                        focus: 'series'
+                                    },
+                                    data: [datas0[0][1], datas0[1][1], datas0[2][1], datas1[0][1], datas1[1][1], datas1[2][1], datas2[0][1], datas2[1][1], datas2[2][1]]
+                                },
+                                {
+                                    name: '1-2',
+                                    type: 'bar',
+                                    stack: 'total',
+                                    label: {
+                                        show: true
+                                    },
+                                    emphasis: {
+                                        focus: 'series'
+                                    },
+                                    data: [datas0[0][2], datas0[1][2], datas0[2][2], datas1[0][2], datas1[1][2], datas1[2][2], datas2[0][2], datas2[1][2], datas2[2][2]]
+                                },
+                                {
+                                    name: '2-3',
+                                    type: 'bar',
+                                    stack: 'total',
+                                    label: {
+                                        show: true
+                                    },
+                                    emphasis: {
+                                        focus: 'series'
+                                    },
+                                    data: [datas0[0][3], datas0[1][3], datas0[2][3], datas1[0][3], datas1[1][3], datas1[2][3], datas2[0][3], datas2[1][3], datas2[2][3]]
+                                },
+                                {
+                                    name: '3-4',
+                                    type: 'bar',
+                                    stack: 'total',
+                                    label: {
+                                        show: true
+                                    },
+                                    emphasis: {
+                                        focus: 'series'
+                                    },
+                                    data: [datas0[0][4], datas0[1][4], datas0[2][4], datas1[0][4], datas1[1][4], datas1[2][4], datas2[0][4], datas2[1][4], datas2[2][4]]
+                                },
+                                {
+                                    name: '4-5',
+                                    type: 'bar',
+                                    stack: 'total',
+                                    label: {
+                                        show: true
+                                    },
+                                    emphasis: {
+                                        focus: 'series'
+                                    },
+                                    data: [datas0[0][5], datas0[1][5], datas0[2][5], datas1[0][5], datas1[1][5], datas1[2][5], datas2[0][5], datas2[1][5], datas2[2][5]]
+                                }
+                            ]
+                        };
+
+                        if (option && typeof option === 'object') {
+                            myChart.setOption(option);
+                        }
+
+                        window.addEventListener('resize', myChart.resize);
+                    });
+                    $(".Subb").click(function () {
+                        html2canvas(document.body).then(function (canvas) {
+                            // 将canvas转换为图片URL
+                            var imageURL = canvas.toDataURL("image/png");
+
+                            // 创建一个用于下载的a元素
+                            var downloadLink = document.createElement("a");
+                            downloadLink.href = imageURL;
+                            downloadLink.download = "PercentileBargraph.png";
+                            // 模拟点击下载链接
+                            downloadLink.click();
+                        });
+                    })
+                </script>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="contact2" role="tabpanel" aria-labelledby="contact-tab">
+            <div style="height: 20px;"></div>
+            <div class="container">
+                <div style="text-align: right;margin-right: 100px;">
+                    <button type="button" class="btn btn-light">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-download Subc" viewBox="0 0 16 16">
+                            <path
+                                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                            <path
+                                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                        </svg>
+                    </button>
+                </div>
+                <h2 style="color: aliceblue;text-align: center;">Two-sample T-test of scores</h2>
+                <table class="table table-dark h3" cellspacing="0" cellpadding="0" style="color: aliceblue;">
+                    <caption style="color: aliceblue;">Note: Table shows the average and standard deviation of each
+                        method and T-value indicates a great significant difference when T-value<0.05.< /caption>
+                    <thead>
+                        <tr>
+                            <th colspan="1" rowspan="2" class="h2" style="text-align: center;vertical-align: middle;">
+                                Criterion</th>
+                            <th colspan="1" rowspan="2" style="text-align: center;vertical-align: middle;">Method A</th>
+                            <th colspan="1" rowspan="2" style="text-align: center;vertical-align: middle;">Method B</th>
+                            <th colspan="1" rowspan="2" style="text-align: center;vertical-align: middle;">Method C</th>
+                            <th colspan="2" rowspan="1" style="text-align: center;vertical-align: middle;">T-Value
+                                Method C vs.</th>
+                        </tr>
+                        <tr>
+                            <th colspan="1" rowspan="1" style="text-align: center;vertical-align: middle;">.Method B
+                            </th>
+                            <th colspan="1" rowspan="1" style="text-align: center;vertical-align: middle;">.Method A
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="line-height: 40px;height: 100px;">
+                            <td style="text-align: center;vertical-align: middle;">Overall quality</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e11}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e44}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e77}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{ea}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{eb}}</td>
+                        </tr>
+                        <tr style="line-height: 40px;height: 100px;">
+                            <td style="text-align: center;vertical-align: middle;">SNR</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e22}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e55}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e88}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{ec}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{ed}}</td>
+                        </tr>
+                        <tr style="line-height: 40px;height: 100px;">
+                            <td style="text-align: center;vertical-align: middle;">Artifact suppression</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e33}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e66}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e99}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{ee}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{ef}}</td>
+                        </tr>
+                        <hr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="contact3" role="tabpanel" aria-labelledby="contact-tab">
+            <div style="height: 20px;"></div>
+            <div class="container">
+                <div style="text-align: right;margin-right: 100px;">
+                    <button type="button" class="btn btn-light">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-download Subd" viewBox="0 0 16 16">
+                            <path
+                                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                            <path
+                                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                        </svg>
+                    </button>
+                </div>
+                <h2 style="color: aliceblue;text-align: center;">Wilcoxon signed-rank test of scores</h2>
+                <table class="table table-dark h3" cellspacing="0" cellpadding="0" style="color: aliceblue;">
+                    <caption style="color: aliceblue;">Note: Table shows the median of each method and P-value < 0.05
+                            indicates a great significant difference. </caption>
+                    <thead>
+                        <tr>
+                            <th colspan="1" rowspan="2" class="h2" style="text-align: center;vertical-align: middle;">
+                                Criterion</th>
+                            <th colspan="1" rowspan="2" style="text-align: center;vertical-align: middle;">Method A</th>
+                            <th colspan="1" rowspan="2" style="text-align: center;vertical-align: middle;">Method B</th>
+                            <th colspan="1" rowspan="2" style="text-align: center;vertical-align: middle;">Method C</th>
+                            <th colspan="2" rowspan="1" style="text-align: center;vertical-align: middle;">P-Value
+                                Method C vs.</th>
+                        </tr>
+                        <tr>
+                            <th colspan="1" rowspan="1" style="text-align: center;vertical-align: middle;">.Method B
+                            </th>
+                            <th colspan="1" rowspan="1" style="text-align: center;vertical-align: middle;">.Method A
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="line-height: 40px;height: 100px;">
+                            <td style="text-align: center;vertical-align: middle;">Overall quality</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e1}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e4}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e7}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{eaa}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{ebb}}</td>
+                        </tr>
+                        <tr style="line-height: 40px;height: 100px;">
+                            <td style="text-align: center;vertical-align: middle;">SNR</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e2}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e5}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e8}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{ecc}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{edd}}</td>
+                        </tr>
+                        <tr style="line-height: 40px;height: 100px;">
+                            <td style="text-align: center;vertical-align: middle;">Artifact suppression</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e3}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e6}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{e9}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{eee}}</td>
+                            <td style="text-align: center;vertical-align: middle;">{{eff}}</td>
+                        </tr>
+                        <hr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="overlay">
+            <div class="popup">
+                <p class="popup_content">请由上传数据页面进入</p>
+                <div class="popup_btn">
+                    <a type="button" class="confirmBtn" href="#" onclick="hiddenPopup()">确认</a>
+                </div>
+            </div>
+        </div>
+        <div id="overlaya">
+            <div class="popup">
+                <p class="popup_content">请由分享数据页面进入</p>
+                <div class="popup_btn">
+                    <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupa()">确认</a>
+                </div>
+            </div>
+        </div>
+        <div id="overlayb">
+            <div class="popup">
+                <p class="popup_content">请由统计页面进入</p>
+                <div class="popup_btn">
+                    <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupb()">确认</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        $('.comSub').trigger("click")
+    }
+    function showPopup() {
+        var overlaya = document.getElementById("overlay");
+        overlaya.style.display = "block";
+    }
+    function showPopupa() {
+        var overlayb = document.getElementById("overlaya");
+        overlayb.style.display = "block";
+    }
+    function showPopupb() {
+        var overlayc = document.getElementById("overlayb");
+        overlayc.style.display = "block";
+    }
+    function hiddenPopup() {
+        var overlaya = document.getElementById("overlay");
+        overlaya.style.display = "none";
+    }
+    function hiddenPopupa() {
+        var overlayb = document.getElementById("overlaya");
+        overlayb.style.display = "none";
+    }
+    function hiddenPopupb() {
+        var overlayc = document.getElementById("overlayb");
+        overlayc.style.display = "none";
+    }
+    $(".Subc").click(function () {
+        html2canvas(document.body).then(function (canvas) {
+            // 将canvas转换为图片URL
+            var imageURL = canvas.toDataURL("image/png");
+
+            // 创建一个用于下载的a元素
+            var downloadLink = document.createElement("a");
+            downloadLink.href = imageURL;
+            downloadLink.download = "Two-sampleT-testofscores.png";
+            // 模拟点击下载链接
+            downloadLink.click();
+        });
+    })
+    $(".Subd").click(function () {
+        html2canvas(document.body).then(function (canvas) {
+            // 将canvas转换为图片URL
+            var imageURL = canvas.toDataURL("image/png");
+
+            // 创建一个用于下载的a元素
+            var downloadLink = document.createElement("a");
+            downloadLink.href = imageURL;
+            downloadLink.download = "Wilcoxonsigned-ranktestofscores.png";
+            // 模拟点击下载链接
+            downloadLink.click();
+        });
+    })
+    $(".Sube").click(function () {
+        html2canvas(document.body).then(function (canvas) {
+            // 将canvas转换为图片URL
+            var imageURL = canvas.toDataURL("image/png");
+
+            // 创建一个用于下载的a元素
+            var downloadLink = document.createElement("a");
+            downloadLink.href = imageURL;
+            downloadLink.download = "Objective assessment.png";
+            // 模拟点击下载链接
+            downloadLink.click();
+        });
+    })
+</script>
+{% endblock %}

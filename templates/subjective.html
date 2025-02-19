@@ -1,0 +1,762 @@
+{% extends 'base.html' %} {% block title %} 智能云医学影像分析平台 {% endblock %} {% block
+head %}
+<!-- 定义主页背景色的CSS样式 -->
+<script src="../../static/js/waibu/translate.js"></script>
+<script src="../../static/js/waibu/bootstrap-slider.js"></script>
+<script src="../../static/js/waibu/hammer.js"></script>
+<script src="../../static/js/waibu/cornerstone.js"></script>
+<script src="../../static/js/waibu/cornerstoneMath.min.js"></script>
+<script src="../../static/js/waibu/cornerstoneWADOImageLoader.bundle.min.js"></script>
+<script src="../../static/js/waibu/cornerstoneWebImageLoader.min.js"></script>
+<script src="../../static/js/waibu/cornerstoneTools.js"></script>
+<script src="../../static/js/waibu/dicomParser.min.js"></script>
+<script src="../../static/js/waibu/layui.js"></script>
+<script src="../../static/js/waibu/jquery.min.js"></script>
+<script src="../../static/js/bootsrap/bootstrap.bundle.min.js"></script>
+<script src="../../static/js/waibu/jquery-ui.min.js"></script>
+<script src="../../static/js/other.js"></script>
+
+<link rel="stylesheet" href="../../static/css/waibu/jquery-ui.min.css">
+<link href="../../static/css/waibu/bootstrap-slider.css" rel="stylesheet">
+<link href="../../static/css/waibu/layui.css" rel="stylesheet" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.css" />
+<link rel="stylesheet" href="../../static/css/waibu/jquery-scrollbar.css" />
+<link rel="stylesheet" href="../../static/css/wangzhan.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.rtl.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-reboot.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-utilities.css" />
+{% endblock %} {% block body%}
+<div>
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
+        <div class="container">
+            <a class="h1 navbar-brand" href="{{url_for('root')}}" id="navname">智能云医学影像分析平台</a>
+            <button class="navbar-light navbar-toggler collapsed btn btn-primary" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarsDefault" aria-expanded="false"
+                aria-controls="navbarsDefault">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse offcanvas-collapse" id="navbarsDefault">
+                <ul class="navbar-nav ml-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a href="{{url_for('datauploads.datauploads')}}" class="nav-link">上传数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="#" onclick="showPopup()" class="nav-link">客观评价</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('subjectivealls.subjectivealls')}}" class="nav-link">分享数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupa()" class="nav-link" style="color: aquamarine;">评估</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('statistics.statistics')}}" class="nav-link">统计</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupb()" class="nav-link">主观评价</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{url_for('teammates.teammates')}}" class="nav-link">团队</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="false"
+                            aria-expanded="false">用户</a>
+                        <ul class="dropdown-menu" style="min-width: 22px">
+                            <li>
+                                <a href="{{url_for('login.login')}}" class="dropdown-item">登录</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.register')}}" class="dropdown-item">注册</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.retrieve')}}" class="dropdown-item">找回</a>
+                            </li>
+                            <li>
+                                <a href="/admin" class="dropdown-item">后台</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="translate" style="text-align: right;margin-right: 50px;margin-top: 30px;"></div>
+    <div class="container pt-7 pb-5">
+        <div style="height: 50px"></div>
+        <div class="justify-content-center">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><button class="btn btn-light btn-suba">WwwcRegion</button></li>
+                    <li class="breadcrumb-item"><button class="btn btn-light btn-subb">Wwwc</button></li>
+                    <li class="breadcrumb-item"><button class="btn btn-light btn-subc">DragProbe</button></li>
+                    <li class="breadcrumb-item"><button class="btn btn-light btn-subd">Length</button></li>
+                    <li class="breadcrumb-item"><button class="btn btn-light btn-sube">Angle</button></li>
+                    <li class="breadcrumb-item"><button class="btn btn-light btn-subf">ArrowAnnotate</button></li>
+                    <li class="breadcrumb-item"><button class="btn btn-light btn-subg">FreehandScissors</button></li>
+                    <li class="breadcrumb-item"><button class="btn btn-light btn-subh">WwwcSynchronizer</button></li>
+                    <li class="breadcrumb-item"><a class="btn btn-light" href="/datauploads/yiyi?teamcode={{teamcode}}&filename={{datasname}}&T={{kinds}}">Image</a></li>
+                    {% if gif!="" %}
+                    <li class="breadcrumb-item"><a class="btn btn-light btn-subi" href="/subjectivealls/canvas?gif={{gif}}&teamcode={{teamcode}}&filename={{datasname}}&T={{kinds}}">SignalStrengthCurve</a></li>
+                            {% endif %}
+                </ol>
+            </nav>
+        </div>
+        <div>
+            <form id="form1" action="{{url_for('subjectivealls.updata')}}" method="post">
+                <input name="ht" value="{{kinds}}" hidden>
+                <input id="hh" name="hh" value="" hidden>
+                <input name="e1" id="e1" value="{{e1}}" hidden>
+                <input name="e2" id="e2" value="{{e2}}" hidden>
+                <input name="e3" id="e3" value="{{e3}}" hidden>
+                <input name="e4" id="e4" value="{{e4}}" hidden>
+                <input name="e5" id="e5" value="{{e5}}" hidden>
+                <input name="e6" id="e6" value="{{e6}}" hidden>
+                <input name="e7" id="e7" value="{{e7}}" hidden>
+                <input name="e8" id="e8" value="{{e8}}" hidden>
+                <input name="e9" id="e9" value="{{e9}}" hidden>
+                <input name="Numberofmethods" id="Numberofmethods" value="{{Numberofmethods}}" hidden>
+                <input name="gif" id="gif" value="{{gif}}" hidden>
+                <input id="e10" value="{{kinda}}" hidden>
+                <input id="e11" value="{{kindb}}" hidden>
+                <input id="e12" value="{{kindc}}" hidden>
+                <input id="e13" value="{{kindd}}" hidden>
+                <input name="datasname" value="{{datasname}}" hidden>
+                <button id="buttonsua" class="carousel-control-prev" type="button" style="width: 60px;">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <div id="carouselExample" class="carousel slide container">
+                    <div class="container">
+                        <section class="pt-5 pb-5 aos-init" data-aos="zoom-out-down"
+                            style="position:absolute;left:0%;right: 76%;max-width: 550px;">
+                            {% if gif=="" %}
+                            <h1 class="text-white">Reference</h1>
+                            {% endif %}
+                            <div id="dicomImagea" class="d-block w-100" alt="..."
+                                style=" border-radius: 8px;height:300px;"></div>
+                        </section>
+                    </div>
+                    <div class="container">
+                        <section class="pt-5 pb-5 aos-init" data-aos="zoom-out-down"
+                            style="position:absolute;left:25%;right: 51%;max-width: 550px;">
+                            <h1 class="text-white">Method A </h1>
+                            {% if gif!="" %}
+                            <div class="d-block w-100" alt="..."
+                                style=" border-radius: 8px;height:300px;">
+                            <img src="{{gif}}" class="d-block w-100" style="height:300px;">        
+                            </div>
+                            {% else %}
+                            <div id="dicomImageb" class="d-block w-100" alt="..."
+                                style=" border-radius: 8px;height:300px;"></div>
+                            {% endif %}
+                            {% if Overallquality==1 %}
+                            <div class="pt-3">
+                                <p>
+                                    <label for="ex1" class="text-white">Overall quality：</label>
+                                    <input id="ex1" name="ex1" type="text" style="width:30px;">
+                                </p>
+                                <div id="slider1"></div>
+                            </div>
+                            {% endif %}
+                            {% if SNR==1 %}
+                            <div class="pt-3">
+                                <p>
+                                    <label for="ex2" class="text-white">SNR：</label>
+                                    <input id="ex2" name="ex2" type="text" style="width: 30px;">
+                                </p>
+                                <div id="slider2"></div>
+                            </div>
+                            {% endif %}
+                            {% if Artifactsuppression==1 %}
+                            <div class="pt-3">
+                                <p>
+                                    <label for="ex3" class="text-white">Artifact suppression：</label>
+                                    <input id="ex3" name="ex3" type="text" style="width: 30px;">
+                                </p>
+                                <div id="slider3"></div>
+                            </div>
+                            {% endif %}
+                        </section>
+                    </div>
+                    {% if Numberofmethods>=3 %}
+                    <div class="container">
+                        <section class="pt-5 pb-5 aos-init" data-aos="zoom-out-down"
+                            style="position:absolute;left:51%;right: 25%;max-width: 550px;">
+                            <h1 class="text-white">Method B</h1>
+                            <!-- <img src="{{kindc}}" class="d-block w-100" alt="..." style=" border-radius: 8px;" /> -->
+                            <div id="dicomImagec" class="d-block w-100" alt="..."
+                                style=" border-radius: 8px;height:300px;"></div>
+                            {% if Overallquality==1 %}
+                            <div class="pt-3">
+                                <p>
+                                    <label for="ex4" class="text-white">Overall quality：</label>
+                                    <input id="ex4" name="ex4" type="text" style="width: 30px;">
+                                </p>
+                                <div id="slider4"></div>
+                            </div>
+                            {% endif %}
+                            {% if SNR==1 %}
+                            <div class="pt-3">
+                                <p>
+                                    <label for="ex5" class="text-white">SNR：</label>
+                                    <input id="ex5" name="ex5" type="text" style="width: 30px;">
+                                </p>
+                                <div id="slider5"></div>
+                            </div>
+                            {% endif %}
+                            {% if Artifactsuppression==1 %}
+                            <div class="pt-3">
+                                <p>
+                                    <label for="ex6" class="text-white">Artifact suppression：</label>
+                                    <input id="ex6" name="ex6" type="text" style="width:30px;">
+                                </p>
+                                <div id="slider6"></div>
+                            </div>
+                            {% endif %}
+                        </section>
+                    </div>
+                    {% endif %}
+                    {% if Numberofmethods>=4 %}
+                    <div class="container">
+                        <section class="pt-5 pb-5 aos-init" data-aos="zoom-out-down"
+                            style="position:absolute;left:76%;right: 0%;max-width: 550px;">
+                            <h1 class="text-white">Method C</h1>
+                            <div id="dicomImaged" class="d-block w-100" alt="..."
+                                style=" border-radius: 8px;height:300px;"></div>
+                            {% if Overallquality==1 %}
+                            <div class="pt-3">
+                                <p>
+                                    <label for="ex7" class="text-white">Overall quality：</label>
+                                    <input id="ex7" name="ex7" type="text" style="width: 30px;">
+                                </p>
+                                <div id="slider7"></div>
+                            </div>
+                            {% endif %}
+                            {% if SNR==1 %}
+                            <div class="pt-3">
+                                <p>
+                                    <label for="ex8" class="text-white">SNR：</label>
+                                    <input id="ex8" name="ex8" type="text" style="width: 30px;">
+                                </p>
+                                <div id="slider8"></div>
+                            </div>
+                            {% endif %}
+                            {% if Artifactsuppression==1 %}
+                            <div class="pt-3">
+                                <p>
+                                    <label for="ex9" class="text-white">Artifact suppression：</label>
+                                    <input id="ex9" name="ex9" type="text" style="width: 30px;">
+                                </p>
+                                <div id="slider9"></div>
+                            </div>
+                            {% endif %}
+                        </section>
+                    </div>
+                    {% endif %}
+                </div>
+                <button id="buttonsub" class="carousel-control-next" type="button" style="width: 60px;">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </form>
+        </div>
+        <div style="height: 100px"></div>
+    </div>
+    <div id="overlay">
+        <div class="popup">
+            <p class="popup_content">请由上传数据页面进入</p>
+            <div class="popup_btn">
+                <a type="button" class="confirmBtn" href="#" onclick="hiddenPopup()">确认</a>
+            </div>
+        </div>
+    </div>
+    <div id="overlaya">
+        <div class="popup">
+            <p class="popup_content">请由分享数据页面进入</p>
+            <div class="popup_btn">
+                <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupa()">确认</a>
+            </div>
+        </div>
+    </div>
+    <div id="overlayb">
+        <div class="popup">
+            <p class="popup_content">请由统计页面进入</p>
+            <div class="popup_btn">
+                <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupb()">确认</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showPopup() {
+        var overlaya = document.getElementById("overlay");
+        overlaya.style.display = "block";
+    }
+    function showPopupa() {
+        var overlayb = document.getElementById("overlaya");
+        overlayb.style.display = "block";
+    }
+    function showPopupb() {
+        var overlayc = document.getElementById("overlayb");
+        overlayc.style.display = "block";
+    }
+    function hiddenPopup() {
+        var overlaya = document.getElementById("overlay");
+        overlaya.style.display = "none";
+    }
+    function hiddenPopupa() {
+        var overlayb = document.getElementById("overlaya");
+        overlayb.style.display = "none";
+    }
+    function hiddenPopupb() {
+        var overlayc = document.getElementById("overlayb");
+        overlayc.style.display = "none";
+    }
+
+    var e1 = document.getElementById("e1");
+    var e2 = document.getElementById("e2");
+    var e3 = document.getElementById("e3");
+    var e4 = document.getElementById("e4");
+    var e5 = document.getElementById("e5");
+    var e6 = document.getElementById("e6");
+    var e7 = document.getElementById("e7");
+    var e8 = document.getElementById("e8");
+    var e9 = document.getElementById("e9");
+    var e10 = document.getElementById("e10");
+    var e11 = document.getElementById("e11");
+    var e12 = document.getElementById("e12");
+    var e13 = document.getElementById("e13");
+    var Numberofmethods = document.getElementById("Numberofmethods");
+    var gif = document.getElementById("gif").value;
+    // 注册并挂载cornerstone及其cornerstoneTools，固定操作
+    cornerstoneTools.external.cornerstone = cornerstone;
+    cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
+    cornerstoneTools.external.Hammer = Hammer;
+    cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
+    cornerstoneWADOImageLoader.external.cornerstone = cornerstone;
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if (Numberofmethods.value == 4 && gif=="") {
+        var imageIda = "wadouri: http://127.0.0.1:5000" + e10.value;
+        var imageIdb = "wadouri: http://127.0.0.1:5000" + e11.value;
+        var imageIdc = "wadouri: http://127.0.0.1:5000" + e12.value;
+        var imageIdd = "wadouri: http://127.0.0.1:5000" + e13.value;
+        // 初始化cornerstoneTools工具
+        cornerstoneTools.init();
+        // 获取要用于加载图片的div区域
+        var elementa = document.getElementById('dicomImagea');
+        var elementb = document.getElementById('dicomImageb');
+        var elementc = document.getElementById('dicomImagec');
+        var elementd = document.getElementById('dicomImaged');
+        //激活获取到的用于图片加载的区域
+        cornerstone.enable(elementa);
+        cornerstone.enable(elementb);
+        cornerstone.enable(elementc);
+        cornerstone.enable(elementd);
+        //使用loadAndCacheImage()方法加载并缓存图片，然后使用displayImage()方法显示图片。
+        cornerstone.loadAndCacheImage(imageIda).then(function (image) {
+            cornerstone.displayImage(elementa, image);
+        })
+        cornerstone.loadAndCacheImage(imageIdb).then(function (image) {
+            cornerstone.displayImage(elementb, image);
+        })
+        cornerstone.loadAndCacheImage(imageIdc).then(function (image) {
+            cornerstone.displayImage(elementc, image);
+        })
+        cornerstone.loadAndCacheImage(imageIdd).then(function (image) {
+            cornerstone.displayImage(elementd, image);
+        })
+        // 从cornerstoneTools库中获取窗宽,窗高工具
+        const WwwcTool = cornerstoneTools.WwwcTool;
+        const WwwcRegionTool = cornerstoneTools.WwwcRegionTool;
+        const ZoomTouchPinchTool = cornerstoneTools.ZoomTouchPinchTool;
+        const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool;
+        const DragProbeTool = cornerstoneTools.DragProbeTool;
+        const AngleTool = cornerstoneTools.AngleTool;
+        const ArrowAnnotateTool = cornerstoneTools.ArrowAnnotateTool;
+        const LengthTool = cornerstoneTools.LengthTool;
+        const EllipticalRoiTool = cornerstoneTools.EllipticalRoiTool;
+
+        cornerstoneTools.addTool(WwwcTool);
+        cornerstoneTools.addTool(WwwcRegionTool);
+        cornerstoneTools.addTool(ZoomTouchPinchTool)
+        cornerstoneTools.addTool(ZoomMouseWheelTool)
+        cornerstoneTools.addTool(DragProbeTool)
+        cornerstoneTools.addTool(AngleTool)
+        cornerstoneTools.addTool(ArrowAnnotateTool)
+        cornerstoneTools.addTool(LengthTool)
+        cornerstoneTools.addTool(EllipticalRoiTool)
+
+
+        const toolName = "Wwwcx";
+        const synchronizer = new cornerstoneTools.Synchronizer(
+            'cornerstoneimagerendered',
+            cornerstoneTools.wwwcSynchronizer
+        );
+        let els = [elementa, elementb, elementc, elementd];
+        let imageIds = [imageIda];
+        let chestImageIds = [imageIda, imageIdb, imageIdc, imageIdd]
+        const chestStack = {
+            currentImageIdIndex: 0,
+            imageIds: chestImageIds,
+        };
+
+        const topgramStack = {
+            currentImageIdIndex: 0,
+            imageIds: imageIds,
+        };
+        $(".btn-subh").click(function (event) {
+            synchronizer.add(els[0]);
+            synchronizer.add(els[1]);
+            synchronizer.add(els[2]);
+            synchronizer.add(els[3]);
+            let f1 = loadSeries(imageIds, els[0], topgramStack);
+            let f2 = loadSeries(chestImageIds, els[1], chestStack);
+            let f3 = loadSeries(chestImageIds, els[2], chestStack);
+            let f4 = loadSeries(chestImageIds, els[3], chestStack);
+            Promise.all([f1, f2, f3, f4]).then(res => {
+                synchronizer.enable = true;
+                const tool = cornerstoneTools[toolName + "Tool"];
+                els.forEach(el => {
+                    cornerstoneTools.addTool(tool);
+                    cornerstoneTools.setToolActive(toolName, {
+                        mouseButtonMask: 1,
+                        synchronizationContext: synchronizer,
+                    });
+                });
+            });
+        })
+    }
+    if (Numberofmethods.value == 3 && gif=="") {
+        var imageIda = "wadouri: http://127.0.0.1:5000" + e10.value;
+        var imageIdb = "wadouri: http://127.0.0.1:5000" + e11.value;
+        var imageIdc = "wadouri: http://127.0.0.1:5000" + e12.value;
+        // 初始化cornerstoneTools工具
+        cornerstoneTools.init();
+        // 获取要用于加载图片的div区域
+        var elementa = document.getElementById('dicomImagea');
+        var elementb = document.getElementById('dicomImageb');
+        var elementc = document.getElementById('dicomImagec');
+        //激活获取到的用于图片加载的区域
+        cornerstone.enable(elementa);
+        cornerstone.enable(elementb);
+        cornerstone.enable(elementc);
+        //使用loadAndCacheImage()方法加载并缓存图片，然后使用displayImage()方法显示图片。
+        cornerstone.loadAndCacheImage(imageIda).then(function (image) {
+            cornerstone.displayImage(elementa, image);
+        })
+        cornerstone.loadAndCacheImage(imageIdb).then(function (image) {
+            cornerstone.displayImage(elementb, image);
+        })
+        cornerstone.loadAndCacheImage(imageIdc).then(function (image) {
+            cornerstone.displayImage(elementc, image);
+        })
+        // 从cornerstoneTools库中获取窗宽,窗高工具
+        const WwwcTool = cornerstoneTools.WwwcTool;
+        const WwwcRegionTool = cornerstoneTools.WwwcRegionTool;
+        const ZoomTouchPinchTool = cornerstoneTools.ZoomTouchPinchTool;
+        const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool;
+        const DragProbeTool = cornerstoneTools.DragProbeTool;
+        const AngleTool = cornerstoneTools.AngleTool;
+        const ArrowAnnotateTool = cornerstoneTools.ArrowAnnotateTool;
+        const LengthTool = cornerstoneTools.LengthTool;
+        const EllipticalRoiTool = cornerstoneTools.EllipticalRoiTool;
+
+        cornerstoneTools.addTool(WwwcTool);
+        cornerstoneTools.addTool(WwwcRegionTool);
+        cornerstoneTools.addTool(ZoomTouchPinchTool)
+        cornerstoneTools.addTool(ZoomMouseWheelTool)
+        cornerstoneTools.addTool(DragProbeTool)
+        cornerstoneTools.addTool(AngleTool)
+        cornerstoneTools.addTool(ArrowAnnotateTool)
+        cornerstoneTools.addTool(LengthTool)
+        cornerstoneTools.addTool(EllipticalRoiTool)
+
+
+        const toolName = "Wwwcx";
+        const synchronizer = new cornerstoneTools.Synchronizer(
+            'cornerstoneimagerendered',
+            cornerstoneTools.wwwcSynchronizer
+        );
+        let els = [elementa, elementb, elementc];
+        let imageIds = [imageIda];
+        let chestImageIds = [imageIda, imageIdb, imageIdc]
+        const chestStack = {
+            currentImageIdIndex: 0,
+            imageIds: chestImageIds,
+        };
+
+        const topgramStack = {
+            currentImageIdIndex: 0,
+            imageIds: imageIds,
+        };
+        $(".btn-subh").click(function (event) {
+            synchronizer.add(els[0]);
+            synchronizer.add(els[1]);
+            synchronizer.add(els[2]);
+            let f1 = loadSeries(imageIds, els[0], topgramStack);
+            let f2 = loadSeries(chestImageIds, els[1], chestStack);
+            let f3 = loadSeries(chestImageIds, els[2], chestStack);
+            Promise.all([f1, f2, f3]).then(res => {
+                synchronizer.enable = true;
+                const tool = cornerstoneTools[toolName + "Tool"];
+                els.forEach(el => {
+                    cornerstoneTools.addTool(tool);
+                    cornerstoneTools.setToolActive(toolName, {
+                        mouseButtonMask: 1,
+                        synchronizationContext: synchronizer,
+                    });
+                });
+            });
+        })
+    }
+    if (Numberofmethods.value == 2 && gif=="") {
+        var imageIda = "wadouri: http://127.0.0.1:5000" + e10.value;
+        var imageIdb = "wadouri: http://127.0.0.1:5000" + e11.value;
+        // 初始化cornerstoneTools工具
+        cornerstoneTools.init();
+        // 获取要用于加载图片的div区域
+        var elementa = document.getElementById('dicomImagea');
+        var elementb = document.getElementById('dicomImageb');
+        //激活获取到的用于图片加载的区域
+        cornerstone.enable(elementa);
+        cornerstone.enable(elementb);
+        //使用loadAndCacheImage()方法加载并缓存图片，然后使用displayImage()方法显示图片。
+        cornerstone.loadAndCacheImage(imageIda).then(function (image) {
+            cornerstone.displayImage(elementa, image);
+        })
+        cornerstone.loadAndCacheImage(imageIdb).then(function (image) {
+            cornerstone.displayImage(elementb, image);
+        })
+        // 从cornerstoneTools库中获取窗宽,窗高工具
+        const WwwcTool = cornerstoneTools.WwwcTool;
+        const WwwcRegionTool = cornerstoneTools.WwwcRegionTool;
+        const ZoomTouchPinchTool = cornerstoneTools.ZoomTouchPinchTool;
+        const ZoomMouseWheelTool = cornerstoneTools.ZoomMouseWheelTool;
+        const DragProbeTool = cornerstoneTools.DragProbeTool;
+        const AngleTool = cornerstoneTools.AngleTool;
+        const ArrowAnnotateTool = cornerstoneTools.ArrowAnnotateTool;
+        const LengthTool = cornerstoneTools.LengthTool;
+        const EllipticalRoiTool = cornerstoneTools.EllipticalRoiTool;
+
+        cornerstoneTools.addTool(WwwcTool);
+        cornerstoneTools.addTool(WwwcRegionTool);
+        cornerstoneTools.addTool(ZoomTouchPinchTool)
+        cornerstoneTools.addTool(ZoomMouseWheelTool)
+        cornerstoneTools.addTool(DragProbeTool)
+        cornerstoneTools.addTool(AngleTool)
+        cornerstoneTools.addTool(ArrowAnnotateTool)
+        cornerstoneTools.addTool(LengthTool)
+        cornerstoneTools.addTool(EllipticalRoiTool)
+
+
+        const toolName = "Wwwcx";
+        const synchronizer = new cornerstoneTools.Synchronizer(
+            'cornerstoneimagerendered',
+            cornerstoneTools.wwwcSynchronizer
+        );
+        let els = [elementa, elementb];
+        let imageIds = [imageIda];
+        let chestImageIds = [imageIda, imageIdb]
+        const chestStack = {
+            currentImageIdIndex: 0,
+            imageIds: chestImageIds,
+        };
+
+        const topgramStack = {
+            currentImageIdIndex: 0,
+            imageIds: imageIds,
+        };
+        $(".btn-subh").click(function (event) {
+            synchronizer.add(els[0]);
+            synchronizer.add(els[1]);
+            let f1 = loadSeries(imageIds, els[0], topgramStack);
+            let f2 = loadSeries(chestImageIds, els[1], chestStack);
+            Promise.all([f1, f2]).then(res => {
+                synchronizer.enable = true;
+                const tool = cornerstoneTools[toolName + "Tool"];
+                els.forEach(el => {
+                    cornerstoneTools.addTool(tool);
+                    cornerstoneTools.setToolActive(toolName, {
+                        mouseButtonMask: 1,
+                        synchronizationContext: synchronizer,
+                    });
+                });
+            });
+        })
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    function loadSeries(images, element, stack) {
+        images.forEach(item => cornerstone.loadAndCacheImage(item));
+
+        return cornerstone.loadImage(images[0]).then(img => {
+            cornerstone.displayImage(element, img);
+
+            cornerstoneTools.addStackStateManager(element, ["stack", toolName]);
+            cornerstoneTools.addToolState(element, "stack", stack);
+        });
+    }
+    cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 1 })
+    cornerstoneTools.setToolActive('ZoomMouseWheel', { mouseButtonMask: 1 })
+    $(".btn-suba").click(function (event) {
+        cornerstoneTools.setToolActive('WwwcRegion', { mouseButtonMask: 1 });
+    })
+    $(".btn-subb").click(function (event) {
+        cornerstoneTools.setToolActive('Wwwc', { mouseButtonMask: 1 })
+    })
+    $(".btn-subc").click(function (event) {
+        cornerstoneTools.setToolActive('DragProbe', { mouseButtonMask: 1 })
+    })
+    $(".btn-subd").click(function (event) {
+        cornerstoneTools.setToolActive('Length', { mouseButtonMask: 1 })
+    })
+    $(".btn-sube").click(function (event) {
+        cornerstoneTools.setToolActive('Angle', { mouseButtonMask: 1 })
+    })
+    $(".btn-subf").click(function (event) {
+        cornerstoneTools.setToolActive('ArrowAnnotate', { mouseButtonMask: 1 })
+    })
+    $(".btn-subg").click(function (event) {
+        cornerstoneTools.setToolActive('EllipticalRoi', { mouseButtonMask: 1 })
+    })
+    $("#buttonsua").click(function (event) {
+        var $this = $(this);
+        $this.off("click");
+        event.preventDefault();
+        var Myelementa = document.getElementById("hh");
+        Myelementa.value = "down";
+        document.getElementById("form1").submit();
+    })
+    $("#buttonsub").click(function (event) {
+        var $this = $(this);
+        $this.off("click");
+        event.preventDefault();
+        var Myelementb = document.getElementById("hh");
+        Myelementb.value = "up";
+        document.getElementById("form1").submit();
+    })
+    $(function () {
+        $("#slider1").slider({
+            range: "max",
+            min: 0,
+            max: 5.0,
+            value: e1.value,
+            step: 0.1,
+            slide: function (event, ui) {
+                $("#ex1").val(ui.value);
+            }
+        });
+        $("#ex1").val($("#slider1").slider("value"));
+    });
+    $(function () {
+        $("#slider2").slider({
+            range: "max",
+            min: 0,
+            max: 5.0,
+            value: e2.value,
+            step: 0.1,
+            slide: function (event, ui) {
+                $("#ex2").val(ui.value);
+            }
+        });
+        $("#ex2").val($("#slider2").slider("value"));
+    });
+    $(function () {
+        $("#slider3").slider({
+            range: "max",
+            min: 0,
+            max: 5.0,
+            value: e3.value,
+            step: 0.1,
+            slide: function (event, ui) {
+                $("#ex3").val(ui.value);
+            }
+        });
+        $("#ex3").val($("#slider3").slider("value"));
+    });
+
+    $(function () {
+        $("#slider4").slider({
+            range: "max",
+            min: 0,
+            max: 5.0,
+            value: e4.value,
+            step: 0.1,
+            slide: function (event, ui) {
+                $("#ex4").val(ui.value);
+            }
+        });
+        $("#ex4").val($("#slider4").slider("value"));
+    });
+    $(function () {
+        $("#slider5").slider({
+            range: "max",
+            min: 0,
+            max: 5.0,
+            value: e5.value,
+            step: 0.1,
+            slide: function (event, ui) {
+                $("#ex5").val(ui.value);
+            }
+        });
+        $("#ex5").val($("#slider5").slider("value"));
+    });
+    $(function () {
+        $("#slider6").slider({
+            range: "max",
+            min: 0,
+            max: 5.0,
+            value: e6.value,
+            step: 0.1,
+            slide: function (event, ui) {
+                $("#ex6").val(ui.value);
+            }
+        });
+        $("#ex6").val($("#slider6").slider("value"));
+    });
+
+    $(function () {
+        $("#slider7").slider({
+            range: "max",
+            min: 0,
+            max: 5.0,
+            value: e7.value,
+            step: 0.1,
+            slide: function (event, ui) {
+                $("#ex7").val(ui.value);
+            }
+        });
+        $("#ex7").val($("#slider7").slider("value"));
+    });
+    $(function () {
+        $("#slider8").slider({
+            range: "max",
+            min: 0,
+            max: 5.0,
+            value: e8.value,
+            step: 0.1,
+            slide: function (event, ui) {
+                $("#ex8").val(ui.value);
+            }
+        });
+        $("#ex8").val($("#slider8").slider("value"));
+    });
+    $(function () {
+        $("#slider9").slider({
+            range: "max",
+            min: 0,
+            max: 5.0,
+            value: e9.value,
+            step: 0.1,
+            slide: function (event, ui) {
+                $("#ex9").val(ui.value);
+            }
+        });
+        $("#ex9").val($("#slider9").slider("value"));
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,360 @@
+{% extends 'base.html' %} {% block title %} 注册 {% endblock %} {% block head %}
+<!-- 加载注册用的js代码 -->
+<script src="../../static/js/waibu/translate.js"></script>
+<script src="../../static/js/waibu/jquery.min.js"></script>
+<script src="../../static/js/waibu/particles.min.js"></script>
+<script src="../../static/js/waibu/echarts.min.js"></script>
+<script src="../../static/js/waibu/jquery.min.js"></script>
+<script src="../../static/js/bootsrap/bootstrap.bundle.min.js"></script>
+<script src="../../static/js/waibu/jquery-ui.min.js"></script>
+<script src="../../static/js/waibu/aos.js"></script>
+<script src="../../static/js/waibu/html2canvas.min.js"></script>
+<script src="../../static/js/other.js"></script>
+
+<link rel="stylesheet" href="../../static/css/wangzhan.css" />
+<link rel="shortcut icon" href="../../static/images/logo.png" type="image/x-i">
+<link rel="stylesheet" href="../../static/css/waibu/jquery-ui.min.css">
+<link href="../../static/css/waibu/bootstrap-slider.css" rel="stylesheet">
+<link href="../../static/css/waibu/layui.css" rel="stylesheet" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.css" />
+<link rel="stylesheet" href="../../static/css/waibu/jquery-scrollbar.css" />
+<link rel="stylesheet" href="../../static/css/wangzhan.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.rtl.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-reboot.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-utilities.css" />
+<link rel="stylesheet" href="../../static/css/waibu/aos.css" />
+{% endblock %} {% block body %}
+<div
+    style="position: absolute;width: 100%;height: 100%;background: url(/static/images/11.jpg);background-attachment: fixed;">
+    <div id="particles-js" style="z-index: 0;position:absolute;width: 100%;height: 100%"></div>
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
+        <div class="container">
+            <a class="h1 navbar-brand" href="{{url_for('root')}}" id="navname">智能云医学影像分析平台</a>
+            <button class="navbar-light navbar-toggler collapsed btn btn-primary" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarsDefault" aria-expanded="false"
+                aria-controls="navbarsDefault">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse offcanvas-collapse" id="navbarsDefault">
+                <ul class="navbar-nav ml-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a href="{{url_for('datauploads.datauploads')}}" class="nav-link">上传数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="#" onclick="showPopup()" class="nav-link">客观评价</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('subjectivealls.subjectivealls')}}" class="nav-link">分享数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupa()" class="nav-link">评估</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('statistics.statistics')}}" class="nav-link">统计</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupb()" class="nav-link">主观评价</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{url_for('teammates.teammates')}}" class="nav-link">团队</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="false"
+                            aria-expanded="false">用户</a>
+                        <ul class="dropdown-menu" style="min-width: 22px">
+                            <li>
+                                <a href="{{url_for('login.login')}}" class="dropdown-item">登录</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.register')}}" class="dropdown-item">注册</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.retrieve')}}" class="dropdown-item">找回</a>
+                            </li>
+                            <li>
+                                <a href="/admin" class="dropdown-item">后台</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="position: fixed;">
+        <div id="translate" style="text-align: right;margin-top: 30px;"></div>
+      </div>
+    <div style="height: 10%;"></div>
+    <div style="width: 100%;">
+        <div class="container">
+            <div class="col">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4">
+                        <div class="card text-white" style="background: rgba(0, 0, 0, 0.5);">
+                            <div class="card-body">
+                                <div class="pt-2 pb-2" style="text-align: center;">
+                                    <a href="{{url_for('root')}}">
+                                        <img src="/static/images/xiaohui.png"
+                                            style="max-width: 150px;max-height: 150px; ">
+                                    </a>
+                                </div>
+                                <form action="{{url_for('login.register_captcha')}}" method="post">
+                                    <div class="form-group">
+                                        <label>用户名: </label>
+                                        <input type="text" name="username" class="form-control" placeholder="请输入用户名" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>邮箱：</label>
+                                        <input type="text" name="email" class="form-control" placeholder="请输入邮箱" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>验证码：</label>
+                                        <div style="width: 100%;">
+                                            <input type="text" name="captcha" class="form-control" placeholder="请输入验证码"
+                                                style="float: left;width: 75%;" />
+                                            <button type="button" id="buttona" class="btn btn-block bg-white"
+                                                style="width: 20%;margin-left: 5%;">
+                                                发送
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>密码: </label>
+                                        <input type="password" name="passwd" class="form-control" placeholder="请输入密码" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>确认密码: </label>
+                                        <input type="password" name="re_password" class="form-control"
+                                            placeholder="请确认密码" />
+                                    </div>
+                                    <div style="text-align: center;width: 100%;">
+                                        <a href="{{url_for('login.login')}}"
+                                            style="margin-right: 10%;text-decoration:underline;font-size:20px;">登录</a>
+                                        <button type="submit" class="btn btn-block btn-lg bg-white mt-4">
+                                            注册
+                                        </button>
+                                        <a href="{{url_for('login.retrieve')}}"
+                                            style="margin-left: 10%;text-decoration:underline;font-size:20px;">找回</a>
+                                    </div>
+                                    <div class="form-group">
+                                        <p>{{ usernames }}</p>
+                                        {% if username_error %}
+                                        <p>{{ username_error }}</p>
+                                        {% endif %}
+                                        {% if password_error %}
+                                        <p>{{ password_error }}</p>
+                                        {% endif %}
+                                        {% if re_password_error %}
+                                        <p>{{ re_password_error }}</p>
+                                        {% endif %}
+                                        {% if email_error %}
+                                        <p>{{ email_error }}</p>
+                                        {% endif %}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="overlay">
+        <div class="popup">
+          <p class="popup_content">请由上传数据页面进入</p>
+          <div class="popup_btn">
+            <a type="button" class="confirmBtn" href="#" onclick="hiddenPopup()">确认</a>
+          </div>
+        </div>
+      </div>
+      <div id="overlaya">
+        <div class="popup">
+          <p class="popup_content">请由分享数据页面进入</p>
+          <div class="popup_btn">
+            <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupa()">确认</a>
+          </div>
+        </div>
+      </div>
+      <div id="overlayb">
+        <div class="popup">
+          <p class="popup_content">请由统计页面进入</p>
+          <div class="popup_btn">
+            <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupb()">确认</a>
+          </div>
+        </div>
+      </div>
+</div>
+<script>
+    function showPopup() {
+        var overlaya = document.getElementById("overlay");
+        overlaya.style.display = "block";
+    }
+    function showPopupa() {
+        var overlayb = document.getElementById("overlaya");
+        overlayb.style.display = "block";
+    }
+    function showPopupb() {
+        var overlayc = document.getElementById("overlayb");
+        overlayc.style.display = "block";
+    }
+    function hiddenPopup() {
+        var overlaya = document.getElementById("overlay");
+        overlaya.style.display = "none";
+    }
+    function hiddenPopupa() {
+        var overlayb = document.getElementById("overlaya");
+        overlayb.style.display = "none";
+    }
+    function hiddenPopupb() {
+        var overlayc = document.getElementById("overlayb");
+        overlayc.style.display = "none";
+    }
+    particlesJS("particles-js", {
+        // 粒子的基本配置
+        particles: {
+            number: {
+                value: 80,  // 粒子数量
+                density: {
+                    enable: true,
+                    value_area: 800,  // 粒子分布密度
+                },
+            },
+            color: {
+                value: "#ffffff",  // 粒子颜色
+            },
+            shape: {
+                type: "circle",  // 粒子形状，支持 circle（圆形）等
+                stroke: {
+                    width: 0,
+                    color: "#000000",
+                },
+                polygon: {
+                    nb_sides: 5,
+                },
+            },
+            opacity: {
+                value: 0.5,  // 粒子透明度
+                random: false,
+                anim: {
+                    enable: false,
+                    speed: 1,
+                    opacity_min: 0.1,
+                    sync: false,
+                },
+            },
+            size: {
+                value: 3,  // 粒子大小
+                random: true,
+                anim: {
+                    enable: false,
+                    speed: 40,
+                    size_min: 0.1,
+                    sync: false,
+                },
+            },
+            line_linked: {
+                enable: true,
+                distance: 150,  // 粒子间连线的距离
+                color: "#ffffff",  // 粒子间连线的颜色
+                opacity: 0.4,  // 粒子间连线的透明度
+                width: 1,  // 粒子间连线的宽度
+            },
+            move: {
+                enable: true,
+                speed: 6,  // 粒子运动速度
+                direction: "none",
+                random: false,
+                straight: false,
+                out_mode: "out",
+                bounce: false,
+                attract: {
+                    enable: false,
+                    rotateX: 600,
+                    rotateY: 1200,
+                },
+            },
+        },
+        // 交互性的配置
+        interactivity: {
+            detect_on: "canvas",
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: "repulse",  // 鼠标悬停效果
+                },
+                onclick: {
+                    enable: true,
+                    mode: "push",  // 鼠标点击效果
+                },
+                resize: true,
+            },
+            modes: {
+                grab: {
+                    distance: 400,
+                    line_linked: {
+                        opacity: 1,
+                    },
+                },
+                bubble: {
+                    distance: 400,
+                    size: 40,
+                    duration: 2,
+                    opacity: 8,
+                    speed: 3,
+                },
+                repulse: {
+                    distance: 200,
+                    duration: 0.4,
+                },
+                push: {
+                    particles_nb: 0,
+                },
+                remove: {
+                    particles_nb: 2,
+                },
+            },
+        },
+        retina_detect: true,
+    });
+    $("#buttona").click(function (event) {
+        var $this = $(this);
+        $this.off("click");
+        // 阻止默认事件
+        event.preventDefault();
+        // 获取邮箱信息
+        var email = $("input[name='email']").val();
+        $.ajax({
+            url: "/login/register/email_send/?email=" + email,
+            method: "GET",
+            success: function (result) {
+                // 获取result中的code值,其中result值是访问的python视图函数的返回的json数据
+                var code = result["code"];
+                if (code == 200) {
+                    var time = 60;
+                    $this.off("click"); // 禁止监听按钮功能
+                    var timer = setInterval(function () {
+                        //设置计时器
+                        $this.text(time); // 将缓冲时间显示在按钮文本上
+                        time -= 1;
+                        if (time <= 0) {
+                            clearInterval(timer); //清楚计时器
+                            $this.text("发送"); //回复按钮文本
+                        }
+                    }, 1000);
+                } else {
+                    alert("发送异常!");
+                }
+            },
+            error: function (error) {
+                alert("发送请求失败!");
+            },
+        });
+    });
+</script>
+{% endblock %}

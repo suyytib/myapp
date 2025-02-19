@@ -1,0 +1,217 @@
+{% extends 'base.html' %} {% block title %} 智能云医学影像分析平台 {% endblock %} {% block
+head %}
+<!-- 定义主页背景色的CSS样式 -->
+<script src="../../static/js/waibu/translate.js"></script>
+<script src="../../static/js/waibu/echarts.min.js"></script>
+<script src="../../static/js/waibu/jquery.min.js"></script>
+<script src="../../static/js/bootsrap/bootstrap.bundle.min.js"></script>
+<script src="../../static/js/waibu/jquery-ui.min.js"></script>
+<script src="../../static/js/waibu/aos.js"></script>
+<script src="../../static/js/waibu/html2canvas.min.js"></script>
+<script src="../../static/js/other.js"></script>
+
+<link rel="stylesheet" href="../../static/css/waibu/jquery-ui.min.css">
+<link href="../../static/css/waibu/bootstrap-slider.css" rel="stylesheet">
+<link href="../../static/css/waibu/layui.css" rel="stylesheet" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.css" />
+<link rel="stylesheet" href="../../static/css/waibu/jquery-scrollbar.css" />
+<link rel="stylesheet" href="../../static/css/wangzhan.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.rtl.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-reboot.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-utilities.css" />
+<link rel="stylesheet" href="../../static/css/waibu/aos.css" />
+{% endblock %} {% block body%}
+<div>
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
+        <div class="container">
+            <a class="h1 navbar-brand" href="{{url_for('root')}}" id="navname">智能云医学影像分析平台</a>
+            <button class="navbar-light navbar-toggler collapsed btn btn-primary" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarsDefault" aria-expanded="false"
+                aria-controls="navbarsDefault">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse offcanvas-collapse" id="navbarsDefault">
+                <ul class="navbar-nav ml-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a href="{{url_for('datauploads.datauploads')}}" class="nav-link">上传数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="#" onclick="showPopup()" class="nav-link" style="color: aquamarine;">客观评价</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('subjectivealls.subjectivealls')}}" class="nav-link">分享数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupa()" class="nav-link">评估</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('statistics.statistics')}}" class="nav-link">统计</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupb()" class="nav-link">主观评价</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{url_for('teammates.teammates')}}" class="nav-link">团队</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="false"
+                            aria-expanded="false">用户</a>
+                        <ul class="dropdown-menu" style="min-width: 22px">
+                            <li>
+                                <a href="{{url_for('login.login')}}" class="dropdown-item">登录</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.register')}}" class="dropdown-item">注册</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.retrieve')}}" class="dropdown-item">找回</a>
+                            </li>
+                            <li>
+                                <a href="/admin" class="dropdown-item">后台</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="translate" style="text-align: right;margin-right: 50px;margin-top: 30px;"></div>
+    <div style="height: 20px;"></div>
+    <div class="container">
+        <div class="justify-content-center">
+            <div style="text-align: right;margin-right: 100px;">
+                <button type="button" class="btn btn-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-download Sube" viewBox="0 0 16 16">
+                        <path
+                            d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                        <path
+                            d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                    </svg>
+                </button>
+            </div>
+            <h2 style="color: aliceblue;text-align: center;">Objective assessment</h2>
+            <table class="table table-dark h3" cellspacing="0" cellpadding="0" style="color: aliceblue;">
+                <caption style="color: aliceblue;">Note: The table shows 3 metrics resulting from an objective
+                    evaluation of each method compared to the gold standard. </caption>
+                <thead>
+                    <tr>
+                        <th colspan="1" rowspan="2" class="h2" style="text-align: center;vertical-align: middle;">
+                            Criterion</th>
+                        <th colspan="1" rowspan="2" style="text-align: center;vertical-align: middle;">Method A</th>
+                        {% if Numberofmethods>=3 %}
+                        <th colspan="1" rowspan="2" style="text-align: center;vertical-align: middle;">Method B</th>
+                        {% endif %}
+                        {% if Numberofmethods>=4 %}
+                        <th colspan="1" rowspan="2" style="text-align: center;vertical-align: middle;">Method C</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="line-height: 40px;height: 100px;">
+                        <td style="text-align: center;vertical-align: middle;">PSNR</td>
+                        <td style="text-align: center;vertical-align: middle;">{{b1}}</td>
+                        {% if Numberofmethods>=3 %}
+                        <td style="text-align: center;vertical-align: middle;">{{b4}}</td>
+                        {% endif %}
+                        {% if Numberofmethods>=4 %}
+                        <td style="text-align: center;vertical-align: middle;">{{b7}}</td>
+                        {% endif %}
+                    </tr>
+                    <tr style="line-height: 40px;height: 100px;">
+                        <td style="text-align: center;vertical-align: middle;">SSIM</td>
+                        <td style="text-align: center;vertical-align: middle;">{{b2}}</td>
+                        {% if Numberofmethods>=3 %}
+                        <td style="text-align: center;vertical-align: middle;">{{b5}}</td>
+                        {% endif %}
+                        {% if Numberofmethods>=4 %}
+                        <td style="text-align: center;vertical-align: middle;">{{b8}}</td>
+                        {% endif %}
+                    </tr>
+                    <tr style="line-height: 40px;height: 100px;">
+                        <td style="text-align: center;vertical-align: middle;">RLNE</td>
+                        <td style="text-align: center;vertical-align: middle;">{{b3}}</td>
+                        {% if Numberofmethods>=3 %}
+                        <td style="text-align: center;vertical-align: middle;">{{b6}}</td>
+                        {% endif %}
+                        {% if Numberofmethods>=4 %}
+                        <td style="text-align: center;vertical-align: middle;">{{b9}}</td>
+                        {% endif %}
+                    </tr>
+                    <hr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="overlay">
+        <div class="popup">
+            <p class="popup_content">请由上传数据页面进入</p>
+            <div class="popup_btn">
+                <a type="button" class="confirmBtn" href="#" onclick="hiddenPopup()">确认</a>
+            </div>
+        </div>
+    </div>
+    <div id="overlaya">
+        <div class="popup">
+            <p class="popup_content">请由分享数据页面进入</p>
+            <div class="popup_btn">
+                <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupa()">确认</a>
+            </div>
+        </div>
+    </div>
+    <div id="overlayb">
+        <div class="popup">
+            <p class="popup_content">请由统计页面进入</p>
+            <div class="popup_btn">
+                <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupb()">确认</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showPopup() {
+        var overlay = document.getElementById("overlay");
+        overlay.style.display = "block";
+    }
+    function showPopupa() {
+        var overlaya = document.getElementById("overlaya");
+        overlaya.style.display = "block";
+    }
+    function showPopupb() {
+        var overlayb = document.getElementById("overlayb");
+        overlayb.style.display = "block";
+    }
+    function hiddenPopup() {
+        var overlaya = document.getElementById("overlay");
+        overlaya.style.display = "none";
+    }
+    function hiddenPopupa() {
+        var overlayb = document.getElementById("overlaya");
+        overlayb.style.display = "none";
+    }
+    function hiddenPopupb() {
+        var overlayc = document.getElementById("overlayb");
+        overlayc.style.display = "none";
+    }
+    $(".Sube").click(function () {
+        html2canvas(document.body).then(function (canvas) {
+            // 将canvas转换为图片URL
+            var imageURL = canvas.toDataURL("image/png");
+
+            // 创建一个用于下载的a元素
+            var downloadLink = document.createElement("a");
+            downloadLink.href = imageURL;
+            downloadLink.download = "Objective assessment.png";
+            // 模拟点击下载链接
+            downloadLink.click();
+        });
+    })
+</script>
+{% endblock %}

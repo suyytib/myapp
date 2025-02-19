@@ -1,0 +1,194 @@
+{% extends 'base.html' %} {% block title %} 智能云医学影像分析平台 {% endblock %} {% block
+head %}
+<!-- 定义主页背景色的CSS样式 -->
+<script src="../../static/js/waibu/translate.js"></script>
+<script src="../../static/js/waibu/layui.js"></script>
+<script src="../../static/js/waibu/jquery.min.js"></script>
+<script src="../../static/js/waibu/jquery.min.js"></script>
+<script src="../../static/js/bootsrap/bootstrap.bundle.min.js"></script>
+<script src="../../static/js/waibu/bootstrap-slider.js"></script>
+<script src="../../static/js/waibu/jquery-ui.min.js"></script>
+<script src="../../static/js/other.js"></script>
+
+<link rel="stylesheet" href="../../static/css/waibu/jquery-ui.min.css">
+<link href="../../static/css/waibu/bootstrap-slider.css" rel="stylesheet">
+<link href="../../static/css/waibu/layui.css" rel="stylesheet" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.css" />
+<link rel="stylesheet" href="../../static/css/waibu/jquery-scrollbar.css" />
+<link rel="stylesheet" href="../../static/css/wangzhan.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.rtl.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-reboot.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-utilities.css" />
+{% endblock %} {% block body%}
+<div>
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
+        <div class="container">
+            <a class="h1 navbar-brand" href="{{url_for('root')}}" id="navname">智能云医学影像分析平台</a>
+            <button class="navbar-light navbar-toggler collapsed btn btn-primary" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarsDefault" aria-expanded="false"
+                aria-controls="navbarsDefault">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse offcanvas-collapse" id="navbarsDefault">
+                <ul class="navbar-nav ml-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a href="{{url_for('datauploads.datauploads')}}" class="nav-link">上传数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="#" onclick="showPopup()" class="nav-link">客观评价</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('subjectivealls.subjectivealls')}}" class="nav-link">分享数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupa()" class="nav-link">评估</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('statistics.statistics')}}" class="nav-link"
+                            style="color: aquamarine;">统计</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupb()" class="nav-link">主观评价</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{url_for('teammates.teammates')}}" class="nav-link">团队</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="false"
+                            aria-expanded="false">用户</a>
+                        <ul class="dropdown-menu" style="min-width: 22px">
+                            <li>
+                                <a href="{{url_for('login.login')}}" class="dropdown-item">登录</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.register')}}" class="dropdown-item">注册</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.retrieve')}}" class="dropdown-item">找回</a>
+                            </li>
+                            <li>
+                                <a href="/admin" class="dropdown-item">后台</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="translate" style="text-align: right;margin-right: 50px;margin-top: 30px;"></div>
+    <div class="container pt-7 pb-5" style="width: 95%">
+        <div style="height: 20px"></div>
+        <div class="bg-dark onlinetest justify-content-center">
+            <table class="table table-dark h4" cellspacing="0" cellpadding="0" style="color: aliceblue">
+                <thead>
+                    <tr>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Created time
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Updated time
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Filename
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Total slices
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Done slices
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Methods number
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Analysis chart
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for da,op in datas %}
+                    <tr style="line-height: 40px; height: 100px">
+                        <td style="text-align: center; vertical-align: middle">{{da.time}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{da.updatetime}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{da.projectname}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{da.fenshu}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{op}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{da.Numberofmethods}}</td>
+                        <td style="text-align: center; vertical-align: middle">
+                            <a type="button" class="btn btn-light"
+                                href="/statistics/datastatistics?datasname={{da.projectname}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <hr />
+                </tbody>
+            </table>
+            <hr style="margin-top: 30px; margin-bottom: 20px" />
+            <div style="height: 20px"></div>
+        </div>
+    </div>
+    <div id="overlay">
+        <div class="popup">
+            <p class="popup_content">请由上传数据页面进入</p>
+            <div class="popup_btn">
+                <a type="button" class="confirmBtn" href="#" onclick="hiddenPopup()">确认</a>
+            </div>
+        </div>
+    </div>
+    <div id="overlaya">
+        <div class="popup">
+            <p class="popup_content">请由分享数据页面进入</p>
+            <div class="popup_btn">
+                <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupa()">确认</a>
+            </div>
+        </div>
+    </div>
+    <div id="overlayb">
+        <div class="popup">
+            <p class="popup_content">请由统计页面进入</p>
+            <div class="popup_btn">
+                <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupb()">确认</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showPopup() {
+        var overlaya = document.getElementById("overlay");
+        overlaya.style.display = "block";
+    }
+    function showPopupa() {
+        var overlayb = document.getElementById("overlaya");
+        overlayb.style.display = "block";
+    }
+    function showPopupb() {
+        var overlayc = document.getElementById("overlayb");
+        overlayc.style.display = "block";
+    }
+    function hiddenPopup() {
+        var overlaya = document.getElementById("overlay");
+        overlaya.style.display = "none";
+    }
+    function hiddenPopupa() {
+        var overlayb = document.getElementById("overlaya");
+        overlayb.style.display = "none";
+    }
+    function hiddenPopupb() {
+        var overlayc = document.getElementById("overlayb");
+        overlayc.style.display = "none";
+    }
+</script>
+{% endblock %}

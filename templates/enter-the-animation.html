@@ -1,0 +1,82 @@
+<!--
+	此示例下载自 https://echarts.apache.org/examples/zh/editor.html?c=graphic-stroke-animation&code=PYBwLglsB2AEC8sDeAoWsDmAnAhiAFhAMYBcya6sApgDZUC2V0YAzmQNoWXnfdgCeIKmQDkYKgA8wIgDRdedAGZhRRJuKyz5fUKvVVNc3pRYC6ZVMb6SVsEYC8zQL8BgRLlAjvqB5hUBgSoATzQM56gB-UtK0pFGDAAZQgAL2FYAA4ABiNg2FDmAHUqCAx8WxEAI2AaABMglJoIaCoAERwWfA4k2AAmBISAXWTgiqra-oB5RUUWKlsk7V5FCBoaUTBcaBYQHCx1MuDTLGAAa1iRAGI2hPWrHqp0iGKwBtgARgn0AF8u3l3-RVxGAEFoCHocSAwCwPSjFACuuEB0DIAGYji9jDRgLpYPMwVQEa8qO9PlQ2LBOClKJYiZQhFg1MwyAkAHQAdkxGzMsRJpJC01mdnmOEWy1WzBObLOfXwg2GozIrXGbO4wrqN3YUpksA6IOMjzVlGemvQrNJAHp9bBwmBQKlgFhYDhYAB3Qh0Gk6skGSljGlxRlWUz8cw8GXoKYzOYLJYrNZOp5O7VsvVE8musi3T3Gb2-2OkwOcgo0HBEbYiCOwDVs4spdog0vcSuwcuRx4AbiAA
+	⚠ 请注意，该图表不是 Apache ECharts 官方示例，而是由用户代码生成的。请注意鉴别其内容。
+-->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+  <script type="text/javascript" src="https://registry.npmmirror.com/echarts/5.5.1/files/dist/echarts.min.js"></script>
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    option = {
+  graphic: {
+    elements: [
+      {
+        type: 'text',
+        left: 'center',
+        top: 'center',
+        style: {
+          text: '智能云医学影像分析平台',
+          fontSize: 80,
+          fontWeight: 'bold',
+          lineDash: [0, 200],
+          lineDashOffset: 0,
+          fill: 'transparent',
+          stroke: '#000',
+          lineWidth: 1
+        },
+        keyframeAnimation: {
+          duration: 3000,
+          loop: false,
+          keyframes: [
+            {
+              percent: 0.7,
+              style: {
+                fill: 'transparent',
+                lineDashOffset: 200,
+                lineDash: [200, 0]
+              }
+            },
+            {
+              // Stop for a while.
+              percent: 0.8,
+              style: {
+                fill: 'transparent'
+              }
+            },
+            {
+              percent: 1,
+              style: {
+                fill: 'black'
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+};
+
+if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+    setInterval(function () {
+      window.location.href = "/home";
+    }, 3000);
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+</html>

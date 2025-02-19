@@ -1,0 +1,53 @@
+showPopup()->id=overlay->hiddenPopup() 请由上传数据页面进入
+showPopupa()->id=overlaya->hiddenPopupa() 请由分享数据页面进入
+showPopupb()->id=overlayb->hiddenPopupb() 请由统计页面进入
+
+Fast Cartesian reconstruction
+showPopupd()->id=overlayd->hiddenPopupd()
+id="filenames" 文件名
+id=overlaye 百分比 id=loading
+inputBox 上传文件 
+onchange="post_pic(this)"
+choosePhoto1() mri
+choosePhoto2() ct
+choosePhoto3() x-ray
+choosePhoto4() ultrasonic
+comSuba 提交
+
+Fast non-cartesian reconstruction(Static)
+showPopupf()->id=overlayf->hiddenPopupf()
+id="filenamesb" 文件名
+id=overlayg 百分比 id=loadingb
+inputBoxb 上传文件 
+onchange="post_picb(this)"
+choosePhotob1() mri
+choosePhotob2() ct
+choosePhotob3() x-ray
+choosePhotob4() ultrasonic
+comSubb 提交
+
+Fast non-cartesian reconstruction(Dynamic)
+showPopuph()->id=overlayh->hiddenPopuph()
+id="filenamesc" 文件名
+id=overlayj 百分比 id=loadingc
+inputBoxc 上传文件 
+onchange="post_picc(this)"
+choosePhotoc1() mri
+choosePhotoc2() ct
+choosePhotoc3() x-ray
+choosePhotoc4() ultrasonic
+comSubc 提交
+
+Direct assessment
+showPopupk()->id=overlayk->hiddenPopupk()
+id="filenamesd" 文件名
+id=overlayl 百分比 id=loadingd
+inputBoxd 上传文件 
+onchange="post_picd(this)"
+choosePhotod1() mri
+choosePhotod2() ct
+choosePhotod3() x-ray
+choosePhotod4() ultrasonic
+comSubd 提交
+
+我把Fast non-cartesian reconstruction 3d替换成立动态，把里面的加速因子换成了选择根

@@ -1,0 +1,208 @@
+{% extends 'base.html' %} {% block title %} 智能云医学影像分析平台 {% endblock %} {% block
+head %}
+<!-- 定义主页背景色的CSS样式 -->
+<script src="../../static/js/waibu/translate.js"></script>
+<script src="../../static/js/waibu/layui.js"></script>
+<script src="../../static/css/waibu/jquery.min.js"></script>
+<script src="../../static/js/waibu/jquery.min.js"></script>
+<script src="../../static/js/bootsrap/bootstrap.bundle.min.js"></script>
+<script src="../../static/css/waibu/bootstrap-slider.js"></script>
+<script src="../../static/css/waibu/jquery-ui.min.js"></script>
+<script src="../../static/js/other.js"></script>
+
+<link rel="stylesheet" href="../../static/css/waibu/jquery-ui.min.css">
+<link href="../../static/css/waibu/bootstrap-slider.css" rel="stylesheet">
+<link href="../../static/css/waibu/layui.css" rel="stylesheet" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.css" />
+<link rel="stylesheet" href="../../static/css/waibu/jquery-scrollbar.css" />
+<link rel="stylesheet" href="../../static/css/wangzhan.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.rtl.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-reboot.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-utilities.css" />
+{% endblock %} {% block body%}
+<div>
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
+        <div class="container">
+            <a class="h1 navbar-brand" href="{{url_for('root')}}" id="navname">智能云医学影像分析平台</a>
+            <button class="navbar-light navbar-toggler collapsed btn btn-primary" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarsDefault" aria-expanded="false"
+                aria-controls="navbarsDefault">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse offcanvas-collapse" id="navbarsDefault">
+                <ul class="navbar-nav ml-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a href="{{url_for('datauploads.datauploads')}}" class="nav-link">上传数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="#" onclick="showPopup()" class="nav-link">客观评价</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('subjectivealls.subjectivealls')}}" class="nav-link">分享数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupa()" class="nav-link">评估</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('statistics.statistics')}}" class="nav-link">统计</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupb()" class="nav-link">主观评价</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{url_for('teammates.teammates')}}" class="nav-link"  style="color: aquamarine;">团队</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="false"
+                            aria-expanded="false">用户</a>
+                        <ul class="dropdown-menu" style="min-width: 22px">
+                            <li>
+                                <a href="{{url_for('login.login')}}" class="dropdown-item">登录</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.register')}}" class="dropdown-item">注册</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.retrieve')}}" class="dropdown-item">找回</a>
+                            </li>
+                            <li>
+                                <a href="/admin" class="dropdown-item">后台</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="translate" style="text-align: right;margin-right: 50px;margin-top: 30px;"></div>
+    <div class="container pt-7 pb-5" style="width: 95%">
+        <div style="height: 20px"></div>
+        <fieldset class="bg-dark" style="text-align: center">
+            <div class="pt-2 pb-2">
+                <input type="text" id="title" name="title" class="btn btn-outline-light btn-lg" lay-verify="required"
+                    placeholder="请输入成员" />
+                <button type="button" class="btn btn-light comSub">add</button>
+                <a type="button" class="btn btn-light" href="{{url_for('teammates.leave')}}"
+                    style="margin-left:100px;">disband</a>
+            </div>
+        </fieldset>
+        <div style="height: 20px"></div>
+        <div class="bg-dark onlinetest justify-content-center">
+            <table class="table table-dark h4" cellspacing="0" cellpadding="0" style="color: aliceblue">
+                <thead>
+                    <tr>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Member
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Delete
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tea in team %}
+                    <tr style="line-height: 40px; height: 100px">
+                        <td style="text-align: center; vertical-align: middle">{{tea.username}}</td>
+                        <td style="text-align: center; vertical-align: middle">
+                            <a type="button" class="btn btn-secondary comSuba" style="margin-left:20px;"
+                                href="/teammates/delete?name={{tea.username}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-trash3" viewBox="0 0 16 16">
+                                    <path
+                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <hr />
+                </tbody>
+            </table>
+            <hr style="margin-top: 30px; margin-bottom: 20px" />
+            <div style="height: 20px"></div>
+        </div>
+    </div>
+    <div id="overlay">
+        <div class="popup">
+          <p class="popup_content">请由上传数据页面进入</p>
+          <div class="popup_btn">
+            <a type="button" class="confirmBtn" href="#" onclick="hiddenPopup()">确认</a>
+          </div>
+        </div>
+      </div>
+      <div id="overlaya">
+        <div class="popup">
+          <p class="popup_content">请由分享数据页面进入</p>
+          <div class="popup_btn">
+            <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupa()">确认</a>
+          </div>
+        </div>
+      </div>
+      <div id="overlayb">
+        <div class="popup">
+          <p class="popup_content">请由统计页面进入</p>
+          <div class="popup_btn">
+            <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupb()">确认</a>
+          </div>
+        </div>
+      </div>
+</div>
+<script>
+    function showPopup() {
+        var overlaya = document.getElementById("overlay");
+        overlaya.style.display = "block";
+    }
+    function showPopupa() {
+        var overlayb = document.getElementById("overlaya");
+        overlayb.style.display = "block";
+    }
+    function showPopupb() {
+        var overlayc = document.getElementById("overlayb");
+        overlayc.style.display = "block";
+    }
+    function hiddenPopup() {
+        var overlaya = document.getElementById("overlay");
+        overlaya.style.display = "none";
+    }
+    function hiddenPopupa() {
+        var overlayb = document.getElementById("overlaya");
+        overlayb.style.display = "none";
+    }
+    function hiddenPopupb() {
+        var overlayc = document.getElementById("overlayb");
+        overlayc.style.display = "none";
+    }
+    layui.use(['form'], function () {
+        var form = layui.form;
+        $(".comSub").click(function () {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                var title = $("#title").val();
+                if (title == "") {
+                    layer.msg("名字不能为空哦！", { icon: 0 });
+                } else {
+                    $.post(
+                        "/teammates/add",
+                        { title: title },
+                        function (result) {
+                            if (result.success) {
+                                window.location.href = "/teammates";
+                            }
+                            else {
+                                alert("添加失败！")
+                            }
+                        }
+                    );
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

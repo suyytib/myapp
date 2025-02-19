@@ -1,0 +1,1633 @@
+{% extends 'base.html' %} {% block title %} 智能云医学影像分析平台 {% endblock %} {% block
+head %}
+<!-- 定义主页背景色的CSS样式 -->
+<script src="../../static/js/waibu/translate.js"></script>
+<script src="../../static/js/waibu/scrollreveal.js"></script>
+<script src="../../static/js/waibu/jquery.min.js"></script>
+<script src="../../static/js/bootsrap/bootstrap.bundle.min.js"></script>
+<script src="../../static/js/waibu/bootstrap-slider.js"></script>
+<script src="../../static/js/waibu/jquery-ui.min.js"></script>
+<script src="../../static/js/waibu/aos.js"></script>
+<script src="../../static/js/other.js"></script>
+
+<link rel="stylesheet" href="../../static/css/waibu/jquery-ui.min.css" />
+<link href="../../static/css/waibu/bootstrap-slider.css" rel="stylesheet" />
+<link href="../../static/css/waibu/layui.css" rel="stylesheet" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.css" />
+<link rel="stylesheet" href="../../static/css/waibu/jquery-scrollbar.css" />
+<link rel="stylesheet" href="../../static/css/wangzhan.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-grid.rtl.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-reboot.min.css" />
+<link rel="stylesheet" href="../../static/css/bootstart/bootstrap-utilities.css" />
+<link rel="stylesheet" href="../../static/css/waibu/aos.css" />
+{% endblock %} {% block body%}
+<div>
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark bg-dark py-4">
+        <div class="container">
+            <a class="h1 navbar-brand" href="{{url_for('root')}}" id="navname">智能云医学影像分析平台</a>
+            <button class="navbar-light navbar-toggler collapsed btn btn-primary" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarsDefault" aria-expanded="false"
+                aria-controls="navbarsDefault">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse offcanvas-collapse" id="navbarsDefault">
+                <ul class="navbar-nav ml-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a href="{{url_for('datauploads.datauploads')}}" class="nav-link"
+                            style="color: aquamarine;">上传数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="#" onclick="showPopup()" class="nav-link">客观评价</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('subjectivealls.subjectivealls')}}" class="nav-link">分享数据</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupa()" class="nav-link">评估</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a href="{{url_for('statistics.statistics')}}" class="nav-link">统计</a>
+                    </li>
+                    <li class="breadcrumb-item" style="color: aliceblue;">></li>
+                    <li class="nav-item">
+                        <a a href="#" onclick="showPopupb()" class="nav-link">主观评价</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{url_for('teammates.teammates')}}" class="nav-link">团队</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-haspopup="false"
+                            aria-expanded="false">用户</a>
+                        <ul class="dropdown-menu" style="min-width: 22px">
+                            <li>
+                                <a href="{{url_for('login.login')}}" class="dropdown-item">登录</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.register')}}" class="dropdown-item">注册</a>
+                            </li>
+                            <li>
+                                <a href="{{url_for('login.retrieve')}}" class="dropdown-item">找回</a>
+                            </li>
+                            <li>
+                                <a href="/admin" class="dropdown-item">后台</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="translate" style="text-align: right;margin-right: 50px;margin-top: 30px;"></div>
+    <div class="container pt-7 pb-5" style="width: 90%">
+        <div style="height: 20px"></div>
+        <div class="bg-dark onlinetest justify-content-center">
+            <div class="container" style="display: flex;justify-content: space-between;">
+                <div>
+                    <ul class="navbar-nav ml-auto align-items-lg-left">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" style="color: aliceblue;"
+                                data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Please choose</a>
+                            <ul class="dropdown-menu" style="min-width: 22px">
+                                <li>
+                                    <a href="#" onclick="showPopupk()" class="dropdown-item">
+                                        Direct assessment</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="showPopupd()" class="dropdown-item">Fast Cartesian
+                                        reconstruction</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="showPopupf()" class="dropdown-item">Fast Non-Cartesian
+                                        reconstruction(Static)</a>
+                                </li>
+                                <li>
+                                    <a href="#" onclick="showPopuph()" class="dropdown-item">Fast Non-Cartesian
+                                        Reconstruction(Dynamic)</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <table class="table table-dark h4" cellspacing="0" cellpadding="0" style="color: aliceblue;background-color:antiquewhite !important">
+                <thead>
+                    <tr>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Filename
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Modal
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Time
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Total slices
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Objective
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Download
+                        </th>
+                        <th colspan="1" rowspan="1" style="text-align: center; vertical-align: middle">
+                            Delete
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for da in datas %}
+                    <tr style="line-height: 40px; height: 100px;">
+                        <td style="text-align: center; vertical-align: middle">{{da.projectname}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{da.motaikind}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{da.time}}</td>
+                        <td style="text-align: center; vertical-align: middle">{{da.fenshu}}</td>
+                        <td style="text-align: center; vertical-align: middle">
+                            <a type="button" class="btn btn-light"
+                                href="/datauploads/objdatastatistics?datasname={{da.projectname}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z" />
+                                </svg>
+                            </a>
+                        </td>
+                        <td style="text-align: center; vertical-align: middle">
+                            <a type="button" class="btn btn-light"
+                                href="../static/images/{{da.teamcode}}/{{da.projectname}}.zip" download>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-download" viewBox="0 0 16 16">
+                                    <path
+                                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                    <path
+                                        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                </svg>
+                            </a>
+                        </td>
+                        <td style="text-align: center; vertical-align: middle">
+                            <a type="button" class="btn btn-secondary"
+                                href="/datauploads/delete?datasname={{da.projectname}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                    class="bi bi-trash3" viewBox="0 0 16 16">
+                                    <path
+                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <hr />
+                </tbody>
+            </table>
+            <hr style="margin-top: 30px; margin-bottom: 20px" />
+            <div style="height: 20px"></div>
+            <div id="overlay">
+                <div class="popup">
+                    <p class="popup_content">请由上传数据页面进入</p>
+                    <div class="popup_btn">
+                        <a type="button" class="confirmBtn" href="#" onclick="hiddenPopup()">确认</a>
+                    </div>
+                </div>
+            </div>
+            <div id="overlaya">
+                <div class="popup">
+                    <p class="popup_content">请由分享数据页面进入</p>
+                    <div class="popup_btn">
+                        <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupa()">确认</a>
+                    </div>
+                </div>
+            </div>
+            <div id="overlayb">
+                <div class="popup">
+                    <p class="popup_content">请由统计页面进入</p>
+                    <div class="popup_btn">
+                        <a type="button" class="confirmBtn" href="#" onclick="hiddenPopupb()">确认</a>
+                    </div>
+                </div>
+            </div>
+            <div id="overlayk">
+                <div class="popupx">
+                    <div style="text-align: right;margin-right: 20px;">
+                        <a type="button" class="btn btn-danger h5 confirmBtn"
+                            href="{{url_for('datauploads.datauploads')}}" style="margin-top: 10px;"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                            </svg></a>
+                    </div>
+                    <div class="popupx_content">
+                        <p class="h3">Direct assessment</p>
+                        <div>
+                            Project name (max 15 characters):
+                            <input type="text" id="filenamesd" value="" placeholder="请输入项目名" style="width: 150px;" />
+                        </div>
+                        <hr>
+                        <div>
+                            Anatomy :
+                            <div class="form-check form-check-inline">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="Brain" name="inlineRadioOptionsd13" selected>Brain</option>
+                                    <option value="Knee" name="inlineRadioOptionsd13">Knee</option>
+                                    <option value="Heart" name="inlineRadioOptionsd13">Heart</option>
+                                    <option value="Liver" name="inlineRadioOptionsd13">Liver</option>
+                                    <option value="Lungs" name="inlineRadioOptionsd13">Lungs</option>
+                                    <option value="Kidneys" name="inlineRadioOptionsd13">Kidneys</option>
+                                    <option value="Bones" name="inlineRadioOptionsd13">Bones</option>
+                                    <option value="Muscles" name="inlineRadioOptionsd13">Muscles</option>
+                                    <option value="BloodVessels" name="inlineRadioOptionsd13">BloodVessels</option>
+                                    <option value="Nerves" name="inlineRadioOptionsd13">Nerves</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Subject to score :
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptionsd16"
+                                    id="inlineRadiod37" value="Yes" checked>
+                                <label class="form-check-label" for="inlineRadiod37">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptionsd16"
+                                    id="inlineRadiod38" value="No">
+                                <label class="form-check-label" for="inlineRadiod38">No</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <input name="inlineRadioOptionsd152" id="inlineRadioOptionsd152" hidden>
+                        <div class="pt-3">
+                            <div class="form-check-inline">
+                                <p>
+                                    <label for="ex2" class="text-white">Number of methods :</label>
+                                    <input id="ex2" type="text" value="" style="width: 30px;">
+                                </p>
+                            </div>
+                            <div class="form-check-inline">
+                                <div id="slider2" style="width: 300px;"></div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Scoring index :
+                            <div class=" form-check form-check-inline" style="vertical-align: middle;">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Overall quality"
+                                        id="flexCheckCheckedd41" name="inlineRadioOptionsd18" checked>
+                                    <label class="form-check-label" for="flexCheckCheckedd41">
+                                        Overall quality
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="SNR" id="flexCheckCheckedd42"
+                                        name="inlineRadioOptionsd19" checked>
+                                    <label class="form-check-label" for="flexCheckCheckedd42">
+                                        SNR
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Artifact suppression"
+                                        id="flexCheckCheckedd43" name="inlineRadioOptionsd20" checked>
+                                    <label class="form-check-label" for="flexCheckCheckedd43">
+                                        Artifact suppression
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div id="overlayl" style="z-index: 9999;">
+                            <div style="text-align: center;margin: 100px auto;max-width: 1000px;margin-top: 200px;">
+                                <div class="progress" role="progressbar" aria-label="Example with label"
+                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" style="width: 0%" id="loadingd">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>File upload:
+                            <input type="file" onchange="post_picd(this)" Webkitdirectory name="uploadedFile"
+                                id="listname1" class="btn btn-outline-dark btn-lg inputBoxd" lay-verify="required"
+                                hidden />
+                            <button type="button" class="btn btn-light" onclick="choosePhotod1()">MRI</button>
+                            <button type="button" class="btn btn-light" onclick="choosePhotod2()">CT</button>
+                            <button type="button" class="btn btn-light" onclick="choosePhotod3()">X-ray</button>
+                            <button type="button" class="btn btn-light" onclick="choosePhotod4()">Ultrasonic</button>
+                        </div>
+                    </div>
+                    <div class="popup_btn">
+                        <button type="button" class="btn btn-light comSubd">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <div id="overlayd">
+                <div class="popupx">
+                    <div style="text-align: right;margin-right: 20px;">
+                        <a type="button" class="btn btn-danger h5 confirmBtn"
+                            href="{{url_for('datauploads.datauploads')}}" style="margin-top: 10px;"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                            </svg></a>
+                    </div>
+                    <div class="popupx_content">
+                        <p class="h3">Fast MRI</p>
+                        <div>
+                            Project name (max 15 characters):
+                            <input type="text" id="filenames" value="" placeholder="请输入项目名" style="width: 150px;" />
+                        </div>
+                        <hr>
+                        <div>
+                            Anatomy :
+                            <div class="form-check form-check-inline">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="Brain" name="inlineRadioOptions1" selected>Brain</option>
+                                    <option value="Knee" name="inlineRadioOptions1">Knee</option>
+                                    <option value="Heart" name="inlineRadioOptions1">Heart</option>
+                                    <option value="Liver" name="inlineRadioOptions1">Liver</option>
+                                    <option value="Lungs" name="inlineRadioOptions1">Lungs</option>
+                                    <option value="Kidneys" name="inlineRadioOptions1">Kidneys</option>
+                                    <option value="Bones" name="inlineRadioOptions1">Bones</option>
+                                    <option value="Muscles" name="inlineRadioOptions1">Muscles</option>
+                                    <option value="BloodVessels" name="inlineRadioOptions1">BloodVessels</option>
+                                    <option value="Nerves" name="inlineRadioOptions1">Nerves</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Sampling pattern :
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions4"
+                                    id="inlineRadio11" value="1D_Uniform" checked>
+                                <label class="form-check-label" for="inlineRadio11">1D Uniform</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions4"
+                                    id="inlineRadio12" value="2D_Circle">
+                                <label class="form-check-label" for="inlineRadio12">2D Circle</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions4"
+                                    id="inlineRadio1314" value="Gaussian_Cartesian">
+                                <label class="form-check-label" for="inlineRadio11">Gaussian Cartesian</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions4"
+                                    id="inlineRadio1414" value="Pseudo_Radial">
+                                <label class="form-check-label" for="inlineRadio12">Pseudo Radial</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions4"
+                                    id="inlineRadio1514" value="1D_PF">
+                                <label class="form-check-label" for="inlineRadio11">1D PF</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Acceleration factor :
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions5"
+                                    id="inlineRadio13" value="2" checked>
+                                <label class="form-check-label" for="inlineRadio13">2</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions5"
+                                    id="inlineRadio14" value="3">
+                                <label class="form-check-label" for="inlineRadio14">3</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions5"
+                                    id="inlineRadio1522" value="4">
+                                <label class="form-check-label" for="inlineRadio13">4</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions5"
+                                    id="inlineRadio1622" value="5">
+                                <label class="form-check-label" for="inlineRadio14">5</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Reconstruction methods :
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions6"
+                                    id="inlineRadio15" value="SENSE" checked>
+                                <label class="form-check-label" for="inlineRadio13">SENSE</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions6"
+                                    id="inlineRadio16" value="SPIRiT">
+                                <label class="form-check-label" for="inlineRadio14">SPIRiT</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Subject to score :
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions8"
+                                    id="inlineRadio19" value="Yes" checked>
+                                <label class="form-check-label" for="inlineRadio19">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions8"
+                                    id="inlineRadio20" value="No">
+                                <label class="form-check-label" for="inlineRadio20">No</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Scoring index :
+                            <div class=" form-check form-check-inline" style="vertical-align: middle;">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Overall quality"
+                                        id="flexCheckChecked25" name="inlineRadioOptions10" checked>
+                                    <label class="form-check-label" for="flexCheckChecked25">
+                                        Overall quality
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="SNR" id="flexCheckChecked26"
+                                        name="inlineRadioOptions11" checked>
+                                    <label class="form-check-label" for="flexCheckChecked26">
+                                        SNR
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Artifact suppression"
+                                        id="flexCheckChecked27" name="inlineRadioOptions12" checked>
+                                    <label class="form-check-label" for="flexCheckChecked27">
+                                        Artifact suppression
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div id="overlaye">
+                            <div style="text-align: center;margin: 100px auto;max-width: 1000px;margin-top: 200px;">
+                                <div class="progress" role="progressbar" aria-label="Example with label"
+                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" style="width: 0%" id="loading">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>File upload:
+                            <input type="file" onchange="post_pic(this)" Webkitdirectory name="uploadedFile"
+                                class="btn btn-outline-dark btn-lg inputBox" lay-verify="required" hidden />
+                            <button type="button" class="btn btn-light" onclick="choosePhoto1()">MRI</button>
+                            <button type="button" class="btn btn-light" onclick="choosePhoto2()">CT</button>
+                            <button type="button" class="btn btn-light" onclick="choosePhoto3()">X-ray</button>
+                            <button type="button" class="btn btn-light" onclick="choosePhoto4()">Ultrasonic</button>
+                        </div>
+                    </div>
+                    <div class="popup_btn">
+                        <button type="button" class="btn btn-light comSuba">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <div id="overlayf">
+                <div class="popupx">
+                    <div style="text-align: right;margin-right: 20px;">
+                        <a type="button" class="btn btn-danger h5 confirmBtn"
+                            href="{{url_for('datauploads.datauploads')}}" style="margin-top: 10px;"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                            </svg></a>
+                    </div>
+                    <div class="popupx_content">
+                        <p class="h3">Fast non-cartesian reconstruction(Static)</p>
+                        <div>
+                            Project name (max 15 characters):
+                            <input type="text" id="filenamesb" value="" placeholder="请输入项目名" style="width: 150px;" />
+                        </div>
+                        <hr>
+                        <div>
+                            Anatomy :
+                            <div class="form-check form-check-inline">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="Brain" name="inlineRadioOptions13" selected>Brain</option>
+                                    <option value="Knee" name="inlineRadioOptions13">Knee</option>
+                                    <option value="Heart" name="inlineRadioOptions13">Heart</option>
+                                    <option value="Liver" name="inlineRadioOptions13">Liver</option>
+                                    <option value="Lungs" name="inlineRadioOptions13">Lungs</option>
+                                    <option value="Kidneys" name="inlineRadioOptions13">Kidneys</option>
+                                    <option value="Bones" name="inlineRadioOptions13">Bones</option>
+                                    <option value="Muscles" name="inlineRadioOptions13">Muscles</option>
+                                    <option value="BloodVessels" name="inlineRadioOptions13">BloodVessels</option>
+                                    <option value="Nerves" name="inlineRadioOptions13">Nerves</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Trajectory :
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions14"
+                                    id="inlineRadio30" value="Golden angle" checked>
+                                <label class="form-check-label" for="inlineRadio30">UNITED IMAGING Golden angle</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions14"
+                                    id="inlineRadio31" value="Pseudo golden angle">
+                                <label class="form-check-label" for="inlineRadio31">PHILIPS Pseudo golden angle</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="pt-3">
+                            <div class="form-check-inline">
+                                <p>
+                                    <label for="ex" class="text-white">Acceleration factor :</label>
+                                    <input id="ex" type="text" value="" style="width: 30px;">
+                                </p>
+                            </div>
+                            <div class="form-check-inline">
+                                <div id="slider" style="width: 300px;"></div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Reconstruction methods :
+                            <div class=" form-check form-check-inline" style="vertical-align: middle;">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="pFISTA-AI"
+                                        id="flexCheckChecked35" checked disabled>
+                                    <label class="form-check-label" for="flexCheckChecked35">
+                                        pFISTA-AI
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="pFISTA"
+                                        id="flexCheckChecked36" checked disabled>
+                                    <label class="form-check-label" for="flexCheckChecked36">
+                                        pFISTA
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Subject to score :
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions16"
+                                    id="inlineRadio37" value="Yes" checked>
+                                <label class="form-check-label" for="inlineRadio37">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions16"
+                                    id="inlineRadio38" value="No">
+                                <label class="form-check-label" for="inlineRadio38">No</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Target analysis method :
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions17"
+                                    id="inlineRadio40" value="pFISTA" checked>
+                                <label class="form-check-label" for="inlineRadio40">pFISTA</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions17"
+                                    id="inlineRadio39" value="pFISTA-AI">
+                                <label class="form-check-label" for="inlineRadio39">pFISTA-AI</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Scoring index :
+                            <div class=" form-check form-check-inline" style="vertical-align: middle;">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Overall quality"
+                                        id="flexCheckChecked41" name="inlineRadioOptions18" checked>
+                                    <label class="form-check-label" for="flexCheckChecked41">
+                                        Overall quality
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="SNR" id="flexCheckChecked42"
+                                        name="inlineRadioOptions19" checked>
+                                    <label class="form-check-label" for="flexCheckChecked42">
+                                        SNR
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Artifact suppression"
+                                        id="flexCheckChecked43" name="inlineRadioOptions20" checked>
+                                    <label class="form-check-label" for="flexCheckChecked43">
+                                        Artifact suppression
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Handle rawdata :
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions21"
+                                    id="inlineRadio44" value="No" checked>
+                                <label class="form-check-label" for="inlineRadio44">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions21"
+                                    id="inlineRadio45" value="Yes">
+                                <label class="form-check-label" for="inlineRadio45">Yes</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div id="overlayg" style="z-index: 9999;">
+                            <div style="text-align: center;margin: 100px auto;max-width: 1000px;margin-top: 200px;">
+                                <div class="progress" role="progressbar" aria-label="Example with label"
+                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" style="width: 0%" id="loadingb">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>File upload:
+                            <input type="file" onchange="post_picb(this)" Webkitdirectory name="uploadedFile"
+                                id="listname" class="btn btn-outline-dark btn-lg inputBoxb" lay-verify="required"
+                                hidden />
+                            <button type="button" class="btn btn-light" onclick="choosePhotob1()">MRI</button>
+                            <button type="button" class="btn btn-light" onclick="choosePhotob2()">CT</button>
+                            <button type="button" class="btn btn-light" onclick="choosePhotob3()">X-ray</button>
+                            <button type="button" class="btn btn-light" onclick="choosePhotob4()">Ultrasonic</button>
+                        </div>
+                    </div>
+                    <div class="popup_btn">
+                        <button type="button" class="btn btn-light comSubb">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <div id="overlayh">
+                <div class="popupx">
+                    <div style="text-align: right;margin-right: 20px;">
+                        <a type="button" class="btn btn-danger h5 confirmBtn"
+                            href="{{url_for('datauploads.datauploads')}}" style="margin-top: 10px;"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                            </svg></a>
+                    </div>
+                    <div class="popupx_content">
+                        <p class="h3">Fast non-cartesian reconstruction(Dynamic)</p>
+                        <div>
+                            Project name (max 15 characters):
+                            <input type="text" id="filenamesc" value="" placeholder="请输入项目名" style="width: 150px;" />
+                        </div>
+                        <hr>
+                        <div>
+                            Anatomy :
+                            <div class="form-check form-check-inline">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="Brain" name="inlineRadioOptions210" selected>Brain</option>
+                                    <option value="Knee" name="inlineRadioOptions210">Knee</option>
+                                    <option value="Heart" name="inlineRadioOptions210">Heart</option>
+                                    <option value="Liver" name="inlineRadioOptions210">Liver</option>
+                                    <option value="Lungs" name="inlineRadioOptions210">Lungs</option>
+                                    <option value="Kidneys" name="inlineRadioOptions210">Kidneys</option>
+                                    <option value="Bones" name="inlineRadioOptions210">Bones</option>
+                                    <option value="Muscles" name="inlineRadioOptions210">Muscles</option>
+                                    <option value="BloodVessels" name="inlineRadioOptions210">BloodVessels</option>
+                                    <option value="Nerves" name="inlineRadioOptions210">Nerves</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="pt-3">
+                            <div class="form-check-inline">
+                                <p>
+                                    <label for="ex3" class="text-white">Nspokes :</label>
+                                    <input id="ex3" type="text" value="" style="width: 30px;">
+                                </p>
+                            </div>
+                            <div class="form-check-inline">
+                                <div id="slider3" style="width: 300px;"></div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Reconstruction methods :
+                            <div class=" form-check form-check-inline" style="vertical-align: middle;">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="stDLNN"
+                                        id="flexCheckChecked51" checked disabled>
+                                    <label class="form-check-label" for="flexCheckChecked51">
+                                        stDLNN
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="pFISTA"
+                                        id="flexCheckChecked52" checked disabled>
+                                    <label class="form-check-label" for="flexCheckChecked52">
+                                        pFISTA
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Subject to score :
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions24"
+                                    id="inlineRadio53" value="Yes" checked>
+                                <label class="form-check-label" for="inlineRadio53">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions24"
+                                    id="inlineRadio54" value="No">
+                                <label class="form-check-label" for="inlineRadio54">No</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Target analysis method :
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions25"
+                                    id="inlineRadio55" value="stDLNN" checked>
+                                <label class="form-check-label" for="inlineRadio55">stDLNN</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions25"
+                                    id="inlineRadio56" value="pFISTA">
+                                <label class="form-check-label" for="inlineRadio56">pFISTA</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Scoring index :
+                            <div class=" form-check form-check-inline" style="vertical-align: middle;">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Overall quality"
+                                        id="flexCheckChecked57" name="inlineRadioOptions26" checked>
+                                    <label class="form-check-label" for="flexCheckChecked57">
+                                        Overall quality
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="SNR" id="flexCheckChecked58"
+                                        name="inlineRadioOptions27" checked>
+                                    <label class="form-check-label" for="flexCheckChecked58">
+                                        SNR
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Artifact suppression"
+                                        id="flexCheckChecked59" name="inlineRadioOptions28" checked>
+                                    <label class="form-check-label" for="flexCheckChecked59">
+                                        Artifact suppression
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            Handle rawdata :
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions29"
+                                    id="inlineRadio60" value="No" checked>
+                                <label class="form-check-label" for="inlineRadio60">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions29"
+                                    id="inlineRadio61" value="Yes">
+                                <label class="form-check-label" for="inlineRadio61">Yes</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div id="overlayj">
+                            <div style="text-align: center;margin: 100px auto;max-width: 1000px;margin-top: 200px;">
+                                <div class="progress" role="progressbar" aria-label="Example with label"
+                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar" style="width: 0%" id="loadingc">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>File upload:
+                            <input type="file" onchange="post_picc(this)" Webkitdirectory name="uploadedFile"
+                                class="btn btn-outline-dark btn-lg inputBoxc" lay-verify="required" hidden />
+                            <button type="button" class="btn btn-light" onclick="choosePhotoc1()">MRI</button>
+                            <button type="button" class="btn btn-light" onclick="choosePhotoc2()">CT</button>
+                            <button type="button" class="btn btn-light" onclick="choosePhotoc3()">X-ray</button>
+                            <button type="button" class="btn btn-light" onclick="choosePhotoc4()">Ultrasonic</button>
+                        </div>
+                    </div>
+                    <div class="popup_btn">
+                        <button type="button" class="btn btn-light comSubc">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#slider").slider({
+            range: "max",
+            min: 2,
+            max: 10,
+            value: 2,
+            step: 1,
+            slide: function (event, ui) {
+                $("#ex").val(ui.value);
+            }
+        });
+        $("#ex").val($("#slider").slider("value"));
+    });
+    $(function () {
+        $("#slider2").slider({
+            range: "max",
+            min: 2,
+            max: 4,
+            value: 2,
+            step: 1,
+            slide: function (event, ui) {
+                $("#ex2").val(ui.value);
+            }
+        });
+        $("#ex2").val($("#slider2").slider("value"));
+    });
+    $(function () {
+        $("#slider3").slider({
+            range: "max",
+            min: 21,
+            max: 200,
+            value: 21,
+            step: 1,
+            slide: function (event, ui) {
+                $("#ex3").val(ui.value);
+            }
+        });
+        $("#ex3").val($("#slider3").slider("value"));
+    });
+    function hiddenPopupd() {
+        var overlayc = document.getElementById("overlayd");
+        overlayc.style.display = "none";
+    }
+    function hiddenPopupf() {
+        var overlayf = document.getElementById("overlayf");
+        overlayf.style.display = "none";
+    }
+    function showPopupf() {
+        var overlayf = document.getElementById("overlayf");
+        overlayf.style.display = "block";
+    }
+    function hiddenPopuph() {
+        var overlayh = document.getElementById("overlayh");
+        overlayh.style.display = "none";
+    }
+    function showPopuph() {
+        var overlayh = document.getElementById("overlayh");
+        overlayh.style.display = "block";
+    }
+    function showPopupk() {
+        var overlayk = document.getElementById("overlayk");
+        overlayk.style.display = "block";
+    }
+    function hiddenPopupk() {
+        var overlayk = document.getElementById("overlayk");
+        overlayk.style.display = "none";
+    }
+    function showPopupd() {
+        var overlayd = document.getElementById("overlayd");
+        overlayd.style.display = "block";
+    }
+    ///////////////////////////////////////////
+    function showPopup() {
+        var overlay = document.getElementById("overlay");
+        overlay.style.display = "block";
+    }
+    function showPopupa() {
+        var overlaya = document.getElementById("overlaya");
+        overlaya.style.display = "block";
+    }
+    function showPopupb() {
+        var overlayb = document.getElementById("overlayb");
+        overlayb.style.display = "block";
+    }
+    function hiddenPopup() {
+        var overlay = document.getElementById("overlay");
+        overlay.style.display = "none";
+    }
+    function hiddenPopupa() {
+        var overlaya = document.getElementById("overlaya");
+        overlaya.style.display = "none";
+    }
+    function hiddenPopupb() {
+        var overlayb = document.getElementById("overlayb");
+        overlayb.style.display = "none";
+    }
+    ///////////////////////////////////////////
+    let table;
+    let files = [];
+    let motaikind;
+    function post_pic(f) {
+        title = $("#filenames").val();
+        if (title == "" || title == undefined) {
+            alert("文件名不能为空哦！")
+        }
+        else {
+            files = f.files; //获取file组件中的文件
+        }
+    }
+    function post_picb(f) {
+        title = $("#filenamesb").val();
+        if (title == "" || title == undefined) {
+            alert("文件名不能为空哦！")
+        }
+        else {
+            files = f.files; //获取file组件中的文件
+        }
+    }
+    function post_picc(f) {
+        title = $("#filenamesc").val();
+        if (title == "" || title == undefined) {
+            alert("文件名不能为空哦！")
+        }
+        else {
+            files = f.files; //获取file组件中的文件
+        }
+    }
+    function post_picd(f) {
+        title = $("#filenamesd").val();
+        if (title == "" || title == undefined) {
+            alert("文件名不能为空哦！")
+        }
+        else {
+            files = f.files; //获取file组件中的文件
+        }
+    }
+
+    var overlaye = document.getElementById("overlaye");
+    $(".comSuba").click(function () {
+        if (files != null) {
+            overlaye.style.display = "block";
+            readFile(files, 0, title);
+        }
+    });
+    function choosePhoto1() {
+        motaikind = "MRI";
+        $('.inputBox').trigger("click");
+    }
+    function choosePhoto2() {
+        motaikind = "CT";
+        $('.inputBox').trigger("click");
+    }
+    function choosePhoto3() {
+        motaikind = "X-ray";
+        $('.inputBox').trigger("click");
+    }
+    function choosePhoto4() {
+        motaikind = "Ultrasonic";
+        $('.inputBox').trigger("click")
+    }
+    var overlayg = document.getElementById("overlayg");
+    $(".comSubb").click(function () {
+        if (files != null) {
+            overlayg.style.display = "block";
+            readFileb(files, 0, title);
+        }
+    });
+    function choosePhotob1() {
+        motaikind = "MRI";
+        $('.inputBoxb').trigger("click")
+    }
+    function choosePhotob2() {
+        motaikind = "CT";
+        $('.inputBoxb').trigger("click")
+    }
+    function choosePhotob3() {
+        motaikind = "X-ray";
+        $('.inputBoxb').trigger("click")
+    }
+    function choosePhotob4() {
+        motaikind = "Ultrasonic";
+        $('.inputBoxb').trigger("click")
+    }
+    var overlayj = document.getElementById("overlayj");
+    $(".comSubc").click(function () {
+        if (files != null) {
+            overlayj.style.display = "block";
+            readFilec(files, 0, title);
+        }
+    });
+    function choosePhotoc1() {
+        motaikind = "MRI";
+        $('.inputBoxc').trigger("click")
+    }
+    function choosePhotoc2() {
+        motaikind = "CT";
+        $('.inputBoxc').trigger("click")
+    }
+    function choosePhotoc3() {
+        motaikind = "X-ray";
+        $('.inputBoxc').trigger("click")
+    }
+    function choosePhotoc4() {
+        motaikind = "Ultrasonic";
+        $('.inputBoxc').trigger("click")
+    }
+    var overlayl = document.getElementById("overlayl");
+    $(".comSubd").click(function () {
+        if (files != null) {
+            overlayl.style.display = "block";
+            readFiled(files, 0, title);
+        }
+    });
+    function choosePhotod1() {
+        motaikind = "MRI";
+        $('.inputBoxd').trigger("click")
+    }
+    function choosePhotod2() {
+        motaikind = "CT";
+        $('.inputBoxd').trigger("click")
+    }
+    function choosePhotod3() {
+        motaikind = "X-ray";
+        $('.inputBoxd').trigger("click")
+    }
+    function choosePhotod4() {
+        motaikind = "Ultrasonic";
+        $('.inputBoxd').trigger("click")
+    }
+    function readFile(blobArr, index, filename) {
+        if (index >= blobArr.length) {
+            let radio = document.getElementsByName("inlineRadioOptions1");
+            let a;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    a = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions4");
+            let d;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    d = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions5");
+            let e;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    e = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions8");
+            let f;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    f = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions6");
+            let g;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    g = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions10");
+            let h = 0;
+            if (radio[0].checked) {
+                h = 1;
+            }
+            radio = document.getElementsByName("inlineRadioOptions11");
+            let j = 0;
+            if (radio[0].checked) {
+                j = 1;
+            }
+            radio = document.getElementsByName("inlineRadioOptions12");
+            let k = 0;
+            if (radio[0].checked) {
+                k = 1;
+            }
+            $.post(
+                "/datauploads/makeprogram",
+                { a: a, d: d, e: e, f: f, g: g, h: h, name: filename, j: j, k: k },
+                function (result) {
+                    if (result.success) {
+                        var loading = document.getElementById("loading");
+                        loading.style.width = `${100}%`;
+                        loading.innerHTML = `${100}%`;
+                        window.location.href = "/datauploads";
+                    }
+                    else {
+                        alert("添加失败！")
+                    }
+                }
+            );
+            return; // 所有Blob对象已读取完成
+        }
+        var rd = new FileReader(); //创建文件读取对象
+        rd.readAsDataURL(blobArr[index]); //文件读取装换为blob类型
+        if (rd == 0) alert("请输入图片");
+        else {
+            rd.onloadend = function (e) {
+                $.ajax({
+                    url: "/datauploads/filesuploads",
+                    method: "POST",
+                    data: {
+                        data: this.result,
+                        name: index,
+                        Reconstruct: 'Yes',
+                        handlerawdata: 'No',
+                        alls: blobArr.length,
+                        filename: filename,
+                        kind: "Fastmri",
+                        motaikind: motaikind,
+                        Methodnum:"2"
+                    },
+                    success: function (result) {
+                        // 获取result中的code值,其中result值是访问的python视图函数的返回的json数据
+                        var code = result["code"];
+                        if (code == 200) {
+                            var loading = document.getElementById("loading");
+                            loading.style.width = `${parseInt((index * 1.0) / blobArr.length * 100)}%`;
+                            loading.innerHTML = `${parseInt((index * 1.0) / blobArr.length * 100)}%`;
+                            readFile(blobArr, index + 1, filename);
+                        } else {
+                            alert("错误!");
+                            window.location.href = "/datauploads";
+                        }
+                    },
+                    error: function (error) {
+                        alert("发送请求失败!");
+                    },
+                });
+            };
+        }
+    }
+    function readFileb(blobArr, index, filename) {
+        var listname = document.getElementById('listname');
+        if (index + 1 > blobArr.length) {
+            let radio = document.getElementsByName("inlineRadioOptions13");
+            let a;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    a = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions14");
+            let b;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    b = radio[i].value;
+                }
+            }
+            let c;
+            c = $("#ex").val();
+            let wew;
+            wew = $("#ex2").val();
+            radio = document.getElementsByName("inlineRadioOptions17");
+            let e;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    e = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions16");
+            let d;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    d = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions18");
+            let h = 0;
+            if (radio[0].checked) {
+                h = 1;
+            }
+            radio = document.getElementsByName("inlineRadioOptions19");
+            let j = 0;
+            if (radio[0].checked) {
+                j = 1;
+            }
+            radio = document.getElementsByName("inlineRadioOptions20");
+            let k = 0;
+            if (radio[0].checked) {
+                k = 1;
+            }
+            radio = document.getElementsByName("inlineRadioOptions21");
+            let o;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    o = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions1421");
+            let qw;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    qw = radio[i].value;
+                }
+            }
+            $.post(
+                "/datauploads/makeprogramb",
+                { a: a, b: b, c: c, d: d, e: e, h: h, name: filename, j: j, k: k, o: o, qw: qw, wew: wew, listname: listname.files[0].name },
+                function (result) {
+                    if (result.success) {
+                        var loading = document.getElementById("loadingb");
+                        loading.style.width = `${100}%`;
+                        loading.innerHTML = `${100}%`;
+                        window.location.href = "/datauploads";
+                    }
+                    else {
+                        alert("添加失败！")
+                        window.location.href = "/datauploads";
+                    }
+                }
+            );
+        } // 所有Blob对象已读取完成
+        if (blobArr[index].size > 70000) {
+            const chunkSize = Math.ceil(blobArr[index].size / 100); // 将文件分成100个部分
+            const chunks = [];
+            for (let start = 0; start < blobArr[index].size; start += chunkSize) {
+                chunks.push(blobArr[index].slice(start, start + chunkSize));
+            }
+            readFilebmax(chunks, 0, filename, blobArr, index)
+        }
+        else {
+            var rd = new FileReader(); //创建文件读取对象
+            rd.readAsDataURL(blobArr[index]); //文件读取装换为blob类型
+            if (rd == 0) alert("请输入图片");
+            else {
+                radio = document.getElementsByName("inlineRadioOptions21");
+                let o;
+                for (i = 0; i < radio.length; i++) {
+                    if (radio[i].checked) {
+                        o = radio[i].value;
+                    }
+                }
+                rd.onloadend = function (e) {
+                    $.ajax({
+                        url: "/datauploads/filesuploads",
+                        method: "POST",
+                        data: {
+                            data: this.result,
+                            name: index,
+                            Reconstruct: 'Yes',
+                            handlerawdata: o,
+                            alls: blobArr.length,
+                            filename: filename,
+                            listname: listname.files[1].name,
+                            kind: "Fastnon2d",
+                            motaikind: motaikind,
+                            Methodnum: $("#ex2").val()
+                        },
+                        success: function (result) {
+                            // 获取result中的code值,其中result值是访问的python视图函数的返回的json数据
+                            var code = result["code"];
+                            if (code == 200) {
+                                var loading = document.getElementById("loadingb");
+                                loading.style.width = `${parseInt((index * 1.0) / blobArr.length * 100)}%`;
+                                loading.innerHTML = `${parseInt((index * 1.0) / blobArr.length * 100)}%`;
+                                readFileb(blobArr, index + 1, filename);
+
+                            } else {
+                                alert("错误!");
+                                window.location.href = "/datauploads";
+                            }
+                        },
+                        error: function (error) {
+                            alert("发送请求失败!");
+                        },
+                    });
+                };
+            }
+        }
+    }
+    function readFilebmax(blobArr, index, filename, blobArrs, indexs) {
+        var listname = document.getElementById('listname');
+        var rd = new FileReader(); //创建文件读取对象
+        rd.readAsDataURL(blobArr[index]); //文件读取装换为blob类型
+        if (rd == 0) alert("请输入图片");
+        else {
+            radio = document.getElementsByName("inlineRadioOptions21");
+            let o;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    o = radio[i].value;
+                }
+            }
+            rd.onloadend = function (e) {
+                $.ajax({
+                    url: "/datauploads/filesuploads",
+                    method: "POST",
+                    data: {
+                        data: this.result,
+                        name: indexs,
+                        Reconstruct: 'Yes',
+                        handlerawdata: o,
+                        alls: blobArr.length,
+                        filename: filename,
+                        listname: listname.files[0].name,
+                        kind: "Fastnon2d",
+                        motaikind: motaikind,
+                        Methodnum: $("#ex2").val()
+                    },
+                    success: function (result) {
+                        // 获取result中的code值,其中result值是访问的python视图函数的返回的json数据
+                        var code = result["code"];
+                        if (code == 200) {
+                            var loading = document.getElementById("loadingb");
+                            loading.style.width = `${parseInt((index * 1.0) / blobArr.length * 100)}%`;
+                            loading.innerHTML = `${parseInt((index * 1.0) / blobArr.length * 100)}%`;
+                            if (index + 1 < blobArr.length)
+                                readFilebmax(blobArr, index + 1, filename, blobArrs, indexs);
+                            else {
+                                readFileb(blobArrs, indexs + 1, filename)
+                            }
+                        } else {
+                            alert("错误!");
+                            window.location.href = "/datauploads";
+                        }
+                    },
+                    error: function (error) {
+                        alert("发送请求失败!");
+                    },
+                });
+            };
+        }
+
+    }
+    function readFilec(blobArr, index, filename) {
+        if (index + 1 > blobArr.length) {
+            let radio = document.getElementsByName("inlineRadioOptions210");
+            let a;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    a = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions22");
+            let b;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    b = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions24");
+            let d;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    d = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions25");
+            let e;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    e = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptions26");
+            let h = 0;
+            if (radio[0].checked) {
+                h = 1;
+            }
+            radio = document.getElementsByName("inlineRadioOptions27");
+            let j = 0;
+            if (radio[0].checked) {
+                j = 1;
+            }
+            radio = document.getElementsByName("inlineRadioOptions28");
+            let k = 0;
+            if (radio[0].checked) {
+                k = 1;
+            }
+            radio = document.getElementsByName("inlineRadioOptions29");
+            let o;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    o = radio[i].value;
+                }
+            }
+            let wew;
+            wew = $("#ex3").val();
+            $.post(
+                "/datauploads/makeprogramc",
+                { a: a, b: b, c: wew, d: d, e: e, h: h, name: filename, j: j, k: k, o: o },
+                function (result) {
+                    if (result.success) {
+                        var loading = document.getElementById("loadingc");
+                        loading.style.width = `${100}%`;
+                        loading.innerHTML = `${100}%`;
+                        window.location.href = "/datauploads";
+                    }
+                    else {
+                        0
+                        alert("添加失败！")
+                    }
+                }
+            );
+            return; // 所有Blob对象已读取完成
+        }
+        if (blobArr[index].size > 70000) {
+            const chunkSize = Math.ceil(blobArr[index].size / 100); // 将文件分成100个部分
+            const chunks = [];
+            for (let start = 0; start < blobArr[index].size; start += chunkSize) {
+                chunks.push(blobArr[index].slice(start, start + chunkSize));
+            }
+            readFilecmax(chunks, 0, filename, blobArr, index)
+        }
+        else {
+            var rd = new FileReader(); //创建文件读取对象
+            rd.readAsDataURL(blobArr[index]); //文件读取装换为blob类型
+            if (rd == 0) alert("请输入图片");
+            else {
+                radio = document.getElementsByName("inlineRadioOptions29");
+                let o;
+                for (i = 0; i < radio.length; i++) {
+                    if (radio[i].checked) {
+                        o = radio[i].value;
+                    }
+                }
+                rd.onloadend = function (e) {
+                    console.log(this.result)
+                    $.ajax({
+                        url: "/datauploads/filesuploads",
+                        method: "POST",
+                        data: {
+                            data: this.result,
+                            name: index,
+                            alls: blobArr.length,
+                            filename: filename,
+                            kind: "Fastnon3d",
+                            motaikind: motaikind,
+                            Reconstruct: 'Yes',
+                            handlerawdata: o,
+                            listname: "a.dat",
+                            Methodnum: "2"
+                        },
+                        success: function (result) {
+                            // 获取result中的code值,其中result值是访问的python视图函数的返回的json数据
+                            var code = result["code"];
+                            if (code == 200) {
+                                var loading = document.getElementById("loadingc");
+                                loading.style.width = `${parseInt((index * 1.0) / blobArr.length * 100)}%`;
+                                loading.innerHTML = `${parseInt((index * 1.0) / blobArr.length * 100)}%`;
+                                readFilec(blobArr, index + 1, filename);
+                            } else {
+                                alert("请更换文件名!");
+                            }
+                        },
+                        error: function (error) {
+                            alert("发送请求失败!");
+                        },
+                    });
+                };
+            }
+        }
+    }
+    function readFilecmax(blobArr, index, filename, blobArrs, indexs) {
+        var rd = new FileReader(); //创建文件读取对象
+        rd.readAsDataURL(blobArr[index]); //文件读取装换为blob类型
+        if (rd == 0) alert("请输入图片");
+        else {
+            radio = document.getElementsByName("inlineRadioOptions29");
+            let o;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    o = radio[i].value;
+                }
+            }
+            rd.onloadend = function (e) {
+                $.ajax({
+                    url: "/datauploads/filesuploads",
+                    method: "POST",
+                    data: {
+                        data: this.result,
+                        name: indexs,
+                        Reconstruct: 'Yes',
+                        handlerawdata: o,
+                        alls: blobArr.length,
+                        filename: filename,
+                        listname: 'a.dat',
+                        kind: "Fastnon3d",
+                        motaikind: motaikind,
+                        Methodnum: '2'
+                    },
+                    success: function (result) {
+                        // 获取result中的code值,其中result值是访问的python视图函数的返回的json数据
+                        var code = result["code"];
+                        if (code == 200) {
+                            var loading = document.getElementById("loadingc");
+                            loading.style.width = `${parseInt((index * 1.0) / blobArr.length * 100)}%`;
+                            loading.innerHTML = `${parseInt((index * 1.0) / blobArr.length * 100)}%`;
+                            if (index + 1 < blobArr.length)
+                                readFilecmax(blobArr, index + 1, filename, blobArrs, indexs);
+                            else {
+                                readFilec(blobArrs, indexs + 1, filename)
+                            }
+                        } else {
+                            alert("错误!");
+                            window.location.href = "/datauploads";
+                        }
+                    },
+                    error: function (error) {
+                        alert("发送请求失败!");
+                    },
+                });
+            };
+        }
+
+    }
+    function readFiled(blobArr, index, filename) {
+        if (index >= blobArr.length) {
+            let radio = document.getElementsByName("inlineRadioOptionsd13");
+            let a;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    a = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptionsd16");
+            let d;
+            for (i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    d = radio[i].value;
+                }
+            }
+            radio = document.getElementsByName("inlineRadioOptionsd18");
+            let h = 0;
+            if (radio[0].checked) {
+                h = 1;
+            }
+            radio = document.getElementsByName("inlineRadioOptionsd19");
+            let j = 0;
+            if (radio[0].checked) {
+                j = 1;
+            }
+            radio = document.getElementsByName("inlineRadioOptionsd20");
+            let k = 0;
+            if (radio[0].checked) {
+                k = 1;
+            }
+            let wew;
+            wew = $("#ex2").val();
+            $.post(
+                "/datauploads/makeprogramd",
+                { a: a, d: d, h: h, name: filename, j: j, k: k, wew: wew, },
+                function (result) {
+                    if (result.success) {
+                        var loading = document.getElementById("loadingd");
+                        loading.style.width = `${100}%`;
+                        loading.innerHTML = `${100}%`;
+                        window.location.href = "/datauploads";
+                    }
+                    else {
+                        alert("添加失败！")
+                    }
+                }
+            );
+            return; // 所有Blob对象已读取完成
+        }
+        var rd = new FileReader(); //创建文件读取对象
+        rd.readAsDataURL(blobArr[index]); //文件读取装换为blob类型
+        if (rd == 0) alert("请输入图片");
+        else {
+            rd.onloadend = function (e) {
+                $.ajax({
+                    url: "/datauploads/filesuploads",
+                    method: "POST",
+                    data: {
+                        data: this.result,
+                        name: index,
+                        Reconstruct: 'No',
+                        handlerawdata: 'No',
+                        alls: blobArr.length,
+                        filename: filename,
+                        listname: '.dom',
+                        kind: "Fastnon2d",
+                        motaikind: motaikind,
+                        Methodnum: $("#ex2").val()
+                    },
+                    success: function (result) {
+                        // 获取result中的code值,其中result值是访问的python视图函数的返回的json数据
+                        var code = result["code"];
+                        if (code == 200) {
+                            var loading = document.getElementById("loadingd");
+                            loading.style.width = `${parseInt((index * 1.0) / blobArr.length * 100)}%`;
+                            loading.innerHTML = `${parseInt((index * 1.0) / blobArr.length * 100)}%`;
+                            readFiled(blobArr, index + 1, filename);
+                        } else {
+                            alert("错误!");
+                            window.location.href = "/datauploads";
+                        }
+                    },
+                    error: function (error) {
+                        alert("发送请求失败!");
+                    },
+                });
+            };
+        }
+    }
+</script>
+{% endblock %}
